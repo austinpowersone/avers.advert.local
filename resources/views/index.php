@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Index</title>
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/node_modules/angular-route/angular-route.min.js"></script>
-    <script src="/node_modules/angular-resource/angular-resource.min.js"></script>
-    <script src="/app/app.js"></script>
+    <script src="/js/all.js"></script>
+    <script src="/app/controllers/FlatController.js"></script>
+    <script src="/app/controllers/IndexController.js"></script>
+    <script src="/app/controllers/StreetController.js"></script>
 </head>
 
 <body ng-app="advertApp">
