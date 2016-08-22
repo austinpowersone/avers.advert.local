@@ -17,6 +17,7 @@ elixir(function(mix) {
         '../../../node_modules/angular/angular.min.js',
         '../../../node_modules/angular-resource/angular-resource.min.js',
         '../../../node_modules/angular-route/angular-route.min.js',
+        '../../../node_modules/angular-cookie/angular-cookie.min.js',
         '../../../public/app/app.js'
     ]);
 });
