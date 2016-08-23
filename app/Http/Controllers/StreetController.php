@@ -16,7 +16,7 @@ class StreetController extends Controller
      */
     public function index()
     {
-        return response()->json(Street::all());
+        return Street::all();
     }
 
     /**
@@ -48,7 +48,7 @@ class StreetController extends Controller
      */
     public function show($id)
     {
-        //
+        return Stree::findOrFail($id);
     }
 
     /**
