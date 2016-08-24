@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Models\Flat_Schema;
 
 class FlatSchemaController extends Controller
 {
@@ -15,7 +16,7 @@ class FlatSchemaController extends Controller
      */
     public function index()
     {
-        //
+        return Flat_Schema::all();
     }
 
     /**

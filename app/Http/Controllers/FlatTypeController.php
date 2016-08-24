@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-
+use App\Models\Flat_Type;
 class FlatTypeController extends Controller
 {
     /**
@@ -15,7 +15,7 @@ class FlatTypeController extends Controller
      */
     public function index()
     {
-        //
+        return Flat_Type::all();
     }
 
     /**

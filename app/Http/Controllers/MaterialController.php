@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Models\Material;
 
 class MaterialController extends Controller
 {
@@ -15,7 +16,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        //
+        return Material::all();
     }
 
     /**
