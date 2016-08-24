@@ -11,6 +11,11 @@ advertApp.config(['$routeProvider','$resourceProvider', function ($routeProvider
             templateUrl: 'app/views/flats.html',
             controller: 'FlatController'
         });
+    $routeProvider.when('/houses',
+        {
+            templateUrl: 'app/views/house.html',
+            controller: 'HouseController'
+        });
     $routeProvider.when('/streets',
         {
             templateUrl: 'app/views/street.html',

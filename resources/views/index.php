@@ -5,7 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+
     <title>Index</title>
+
     <script src="/components/angular/angular.min.js"></script>
     <script src="/components/angular-resource/angular-resource.min.js"></script>
     <script src="/components/angular-route/angular-route.min.js"></script>
@@ -24,7 +27,6 @@
     <script src="/app/controllers/RegionController.js"></script>
     <script src="/app/controllers/FlatTypeController.js"></script>
     <script src="/app/controllers/FlatSchemaController.js"></script>
-
 </head>
 
 <body ng-app="advertApp">
