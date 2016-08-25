@@ -48,7 +48,7 @@ class MaterialController extends Controller
      */
     public function show($id)
     {
-        //
+        return Material::find($id);
     }
 
     /**

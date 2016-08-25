@@ -7,9 +7,10 @@
 
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/dataTables.bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.css">
     <link rel="stylesheet" href="/css/jasny-bootstrap.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/fonts/BebasNeue.ttf">
 
     <title>Index</title>
     <script src="/components/jquery/dist/jquery.min.js"></script>
@@ -22,16 +23,16 @@
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/app/app.js"></script>
 
+    <script src="/app/services/FlatService.js"></script>
     <script src="/app/services/MaterialService.js"></script>
     <script src="/app/services/RegionService.js"></script>
-    <script src="/app/services/FlatTypeService.js"></script>
-    <script src="/app/services/StreetService.js"></script>
-    <script src="/app/services/FlatSchemaService.js"></script>
-    <script src="/app/services/FlatService.js"></script>
+    <script src="/app/services/HouseService.js"></script>
 
     <script src="/app/controllers/FlatController.js"></script>
     <script src="/app/controllers/IndexController.js"></script>
     <script src="/app/controllers/HouseController.js"></script>
+    <script src="/app/controllers/MaterialController.js"></script>
+    <script src="/app/controllers/RegionController.js"></script>
 </head>
 
 <body ng-app="advertApp">
@@ -81,12 +82,14 @@
                 <a href="" ng-click="isFlats = false" ui-sref="houses" class="btn btn-group">БД Домов</a>
                 <a href="db-customers.html" ng-show="isFlats" class="btn btn-group">БД Покупателей квартир</a>
                 <a href="db-house-customers.html" ng-show="!isFlats" class="btn btn-group">БД Покупателей домов</a>
+                <a href="" ui-sref="material" class="btn btn-group">Materials</a>
             </div>
         </div>
     </div>
+    <div class="container-fluid">
+        <ui-view></ui-view>
+    </div>
 </div>
-
-<ui-view></ui-view>
 
 <script>
     $(document).ready(function() {

@@ -47,7 +47,7 @@ class RegionController extends Controller
      */
     public function show($id)
     {
-        //
+        return Region::get($id);
     }
 
     /**
