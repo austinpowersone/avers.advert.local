@@ -1,4 +1,4 @@
-<table id="layout" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="layout" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
     <tr>
         <th>№</th>
@@ -22,27 +22,27 @@
         <th>Номер дома</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody data-link="row" class="rowlink">
     <tr ng-repeat="house in houses">
-        <td><a href="" ui-sref="house_details({id: house.id})">{{house.id}}</a></td>
-        <td>{{house.count_rooms}}</td>
-        <td>{{house.type}}</td>
-        <td>{{house.count_of_floors}}</td>
-        <td>{{house.living_square}}</td>
-        <td>{{house.total_square}}</td>
-        <td>{{house.kitchen_square}}</td>
-        <td>{{house.area_square}}</td>
-        <td>{{house.cost}}</td>
-        <td>{{house.material}}</td>
-        <td>{{house.sewage}}</td>
-        <td>{{house.water}}</td>
-        <td>{{house.gas}}</td>
-        <td>{{house.electricity}}</td>
-        <td>{{house.state}}</td>
-        <td>{{house.region}}</td>
-        <td>{{house.reference_point}}</td>
-        <td>{{house.street}}</td>
-        <td>{{house.house_number}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.id}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.count_rooms}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.type}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.count_of_floors}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.living_square}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.total_square}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.kitchen_square}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.area_square}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.cost}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.material}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.sewage}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.water}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.gas}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.electricity}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.state}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.region}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.reference_point}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.street}}</td>
+        <td><a href="" ui-sref="house_details({id : house.id})"></a>{{house.house_number}}</td>
     </tr>
     </tbody>
 </table>
