@@ -44,6 +44,7 @@ class CreateTableFlat extends Migration
             $table->string('header', 53);
             $table->string('description', 2000);
             $table->string('add_information');
+            $table->integer('rating');
             $table->integer('id_advert')->unsigned();
             $table->foreign('id_advert')->references('id')->on('adverts');
             $table->timestamps();

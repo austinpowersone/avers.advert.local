@@ -11,6 +11,20 @@ class Experts_AgentsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('expert_agents')->insert(
+            [
+                [
+                    'id_expert' => 1,
+                    'id_agent' => 1
+                ],
+                [
+                    'id_expert' => 1,
+                    'id_agent' => 2
+                ],
+                [
+                    'id_expert' => 1,
+                    'id_agent' => 3
+                ],
+            ]);
     }
 }

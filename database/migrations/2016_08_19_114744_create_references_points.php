@@ -14,7 +14,7 @@ class CreateReferencesPoints extends Migration
     {
         Schema::create('references_point', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('title');
+            $table->string('title');
             $table->timestamps();
         });
 

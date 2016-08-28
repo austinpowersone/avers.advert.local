@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Авг 21 2016 г., 23:14
--- Версия сервера: 5.5.48
--- Версия PHP: 5.6.19
+-- Час створення: Сер 28 2016 р., 00:31
+-- Версія сервера: 5.7.11
+-- Версія PHP: 7.0.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,35 +17,42 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данных: `adverts_DB`
+-- База даних: `adverts_DB`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `adverts`
+-- Структура таблиці `adverts`
 --
 
 CREATE TABLE IF NOT EXISTS `adverts` (
   `id` int(10) unsigned NOT NULL,
   `limit_sites` tinyint(1) NOT NULL,
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `id_agent` int(10) unsigned NOT NULL,
-  `id_expert` int(10) unsigned NOT NULL,
-  `rating` int(11) NOT NULL,
   `call_clear` int(11) NOT NULL,
   `call_mediators` int(11) NOT NULL,
   `date` date NOT NULL,
   `status` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `id_user` int(10) unsigned NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `adverts`
+--
+
+INSERT INTO `adverts` (`id`, `limit_sites`, `title`, `call_clear`, `call_mediators`, `date`, `status`, `created_at`, `updated_at`, `id_user`) VALUES
+(41, 0, 'Продам квартиру', 2, 3, '2016-08-27', '1', NULL, NULL, 1),
+(42, 0, 'Продам дом', 12, 32, '2016-08-27', '1', NULL, NULL, 5),
+(43, 0, 'Продам квартиру', 22, 33, '2016-08-27', '1', NULL, NULL, 6),
+(44, 0, 'Продам дом', 12, 23, '2016-08-27', '2', NULL, NULL, 5);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `adverts_error`
+-- Структура таблиці `adverts_error`
 --
 
 CREATE TABLE IF NOT EXISTS `adverts_error` (
@@ -58,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `adverts_error` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `adverts_sites`
+-- Структура таблиці `adverts_sites`
 --
 
 CREATE TABLE IF NOT EXISTS `adverts_sites` (
@@ -67,27 +74,47 @@ CREATE TABLE IF NOT EXISTS `adverts_sites` (
   `id_site` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `adverts_sites`
+--
+
+INSERT INTO `adverts_sites` (`id`, `id_advert`, `id_site`, `created_at`, `updated_at`) VALUES
+(2, 41, 10, NULL, NULL),
+(3, 42, 11, NULL, NULL),
+(4, 43, 12, NULL, NULL),
+(5, 44, 15, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `agents`
+-- Структура таблиці `agents`
 --
 
 CREATE TABLE IF NOT EXISTS `agents` (
   `id` int(10) unsigned NOT NULL,
   `id_password_type` int(10) unsigned NOT NULL,
-  `phone` char(12) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` char(15) COLLATE utf8_unicode_ci NOT NULL,
   `id_user` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `agents`
+--
+
+INSERT INTO `agents` (`id`, `id_password_type`, `phone`, `id_user`, `created_at`, `updated_at`) VALUES
+(1, 2, '+380963190054', 5, NULL, NULL),
+(2, 2, '+380963199055', 6, NULL, NULL),
+(3, 2, '+380963190034', 7, NULL, NULL),
+(4, 1, '+380963129054', 8, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `balcony_types`
+-- Структура таблиці `balcony_types`
 --
 
 CREATE TABLE IF NOT EXISTS `balcony_types` (
@@ -98,7 +125,7 @@ CREATE TABLE IF NOT EXISTS `balcony_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `balcony_types`
+-- Дамп даних таблиці `balcony_types`
 --
 
 INSERT INTO `balcony_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -115,7 +142,7 @@ INSERT INTO `balcony_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `bathroom_types`
+-- Структура таблиці `bathroom_types`
 --
 
 CREATE TABLE IF NOT EXISTS `bathroom_types` (
@@ -126,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `bathroom_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `bathroom_types`
+-- Дамп даних таблиці `bathroom_types`
 --
 
 INSERT INTO `bathroom_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -141,7 +168,7 @@ INSERT INTO `bathroom_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `buyers`
+-- Структура таблиці `buyers`
 --
 
 CREATE TABLE IF NOT EXISTS `buyers` (
@@ -150,12 +177,22 @@ CREATE TABLE IF NOT EXISTS `buyers` (
   `id_site` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `buyers`
+--
+
+INSERT INTO `buyers` (`id`, `name`, `id_site`, `created_at`, `updated_at`) VALUES
+(1, 'Name Surname', 10, NULL, NULL),
+(2, 'Name1 Surname1', 11, NULL, NULL),
+(3, 'Name2 Surname2', 12, NULL, NULL),
+(4, 'Name3 Surname3', 14, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `electricity_types`
+-- Структура таблиці `electricity_types`
 --
 
 CREATE TABLE IF NOT EXISTS `electricity_types` (
@@ -166,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `electricity_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `electricity_types`
+-- Дамп даних таблиці `electricity_types`
 --
 
 INSERT INTO `electricity_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -177,22 +214,29 @@ INSERT INTO `electricity_types` (`id`, `title`, `created_at`, `updated_at`) VALU
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `experts`
+-- Структура таблиці `experts`
 --
 
 CREATE TABLE IF NOT EXISTS `experts` (
   `id` int(10) unsigned NOT NULL,
   `id_password_type` int(10) unsigned NOT NULL,
-  `phone` char(12) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` char(15) COLLATE utf8_unicode_ci NOT NULL,
   `id_user` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `experts`
+--
+
+INSERT INTO `experts` (`id`, `id_password_type`, `phone`, `id_user`, `created_at`, `updated_at`) VALUES
+(1, 2, '+380993190054', 4, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `expert_agents`
+-- Структура таблиці `expert_agents`
 --
 
 CREATE TABLE IF NOT EXISTS `expert_agents` (
@@ -201,12 +245,21 @@ CREATE TABLE IF NOT EXISTS `expert_agents` (
   `id_agent` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `expert_agents`
+--
+
+INSERT INTO `expert_agents` (`id`, `id_expert`, `id_agent`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, NULL),
+(2, 1, 2, NULL, NULL),
+(3, 1, 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `flats`
+-- Структура таблиці `flats`
 --
 
 CREATE TABLE IF NOT EXISTS `flats` (
@@ -232,15 +285,25 @@ CREATE TABLE IF NOT EXISTS `flats` (
   `header` varchar(53) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(2000) COLLATE utf8_unicode_ci NOT NULL,
   `add_information` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `rating` int(11) NOT NULL,
   `id_advert` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `flats`
+--
+
+INSERT INTO `flats` (`id`, `count_of_rooms`, `id_type`, `floor`, `count_of_floor`, `living_square`, `kitchen_square`, `total_square`, `cost`, `id_schema`, `id_material`, `id_bathroom_type`, `id_balcony_type`, `id_state`, `id_region`, `id_reference_point`, `id_street`, `house_number`, `flat_number`, `header`, `description`, `add_information`, `rating`, `id_advert`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, 3, 12, 60, 10, 70, 500000, 4, 52, 3, 15, 8, 43, 22, 23, 23, 123, 'Хорошая красивая квартира не дорого', '', 'Есть вай фай', 400, 43, NULL, NULL),
+(2, 3, 3, 5, 12, 50, 10, 65, 300000, 2, 51, 1, 18, 5, 40, 21, 29, 2, 13, 'Такая себе красивая квартира не дорого', '', 'Нет вай фай', 300, 41, NULL, NULL),
+(3, 4, 5, 6, 9, 60, 10, 70, 5100000, 2, 53, 4, 17, 5, 40, 20, 123, 3, 134, 'Офигенная красивая квартира не дорого', '', 'Есть вай фай и сауна', 600, 41, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `flats_images`
+-- Структура таблиці `flats_images`
 --
 
 CREATE TABLE IF NOT EXISTS `flats_images` (
@@ -254,7 +317,7 @@ CREATE TABLE IF NOT EXISTS `flats_images` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `flat_schemas`
+-- Структура таблиці `flat_schemas`
 --
 
 CREATE TABLE IF NOT EXISTS `flat_schemas` (
@@ -265,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `flat_schemas` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `flat_schemas`
+-- Дамп даних таблиці `flat_schemas`
 --
 
 INSERT INTO `flat_schemas` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -279,7 +342,7 @@ INSERT INTO `flat_schemas` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `flat_state_types`
+-- Структура таблиці `flat_state_types`
 --
 
 CREATE TABLE IF NOT EXISTS `flat_state_types` (
@@ -290,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `flat_state_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `flat_state_types`
+-- Дамп даних таблиці `flat_state_types`
 --
 
 INSERT INTO `flat_state_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -306,7 +369,7 @@ INSERT INTO `flat_state_types` (`id`, `title`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `flat_types`
+-- Структура таблиці `flat_types`
 --
 
 CREATE TABLE IF NOT EXISTS `flat_types` (
@@ -317,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `flat_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `flat_types`
+-- Дамп даних таблиці `flat_types`
 --
 
 INSERT INTO `flat_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -330,7 +393,7 @@ INSERT INTO `flat_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `gas_types`
+-- Структура таблиці `gas_types`
 --
 
 CREATE TABLE IF NOT EXISTS `gas_types` (
@@ -341,7 +404,7 @@ CREATE TABLE IF NOT EXISTS `gas_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `gas_types`
+-- Дамп даних таблиці `gas_types`
 --
 
 INSERT INTO `gas_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -352,13 +415,14 @@ INSERT INTO `gas_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `houses`
+-- Структура таблиці `houses`
 --
 
 CREATE TABLE IF NOT EXISTS `houses` (
   `id` int(10) unsigned NOT NULL,
   `count_of_rooms` int(11) NOT NULL,
   `id_type` int(10) unsigned NOT NULL,
+  `count_of_floors` int(11) NOT NULL,
   `living_square` double NOT NULL,
   `kitchen_square` double NOT NULL,
   `total_square` double NOT NULL,
@@ -377,15 +441,25 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `header` varchar(53) COLLATE utf8_unicode_ci NOT NULL,
   `description` varchar(2000) COLLATE utf8_unicode_ci NOT NULL,
   `add_information` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `rating` int(11) NOT NULL,
   `id_advert` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `houses`
+--
+
+INSERT INTO `houses` (`id`, `count_of_rooms`, `id_type`, `count_of_floors`, `living_square`, `kitchen_square`, `total_square`, `area_square`, `cost`, `id_material`, `id_sewage`, `id_water`, `id_gas`, `id_electricity`, `id_state`, `id_region`, `id_reference_point`, `id_street`, `house_number`, `header`, `description`, `add_information`, `rating`, `id_advert`, `created_at`, `updated_at`) VALUES
+(10, 2, 1, 2, 60, 10, 90, 10, 5000000, 52, 3, 1, 1, 3, 5, 12, 20, 220, '23', 'Хорошый красивый дом не дорого', '', 'Есть вай фай', 450, 42, NULL, NULL),
+(11, 1, 4, 2, 50, 10, 70, 5, 3000000, 55, 2, 2, 2, 1, 3, 10, 22, 222, '2', 'Неплохой красивый дом не дорого', '', 'Нет вай фай', 250, 44, NULL, NULL),
+(12, 5, 4, 5, 70, 8, 90, 10, 3000000, 53, 1, 1, 3, 2, 4, 15, 24, 2, '1', 'Классный красивый дом не дорого', '', 'Есть вай фай и даже сауна', 550, 42, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `houses_images`
+-- Структура таблиці `houses_images`
 --
 
 CREATE TABLE IF NOT EXISTS `houses_images` (
@@ -399,7 +473,7 @@ CREATE TABLE IF NOT EXISTS `houses_images` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `house_state_types`
+-- Структура таблиці `house_state_types`
 --
 
 CREATE TABLE IF NOT EXISTS `house_state_types` (
@@ -410,7 +484,7 @@ CREATE TABLE IF NOT EXISTS `house_state_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `house_state_types`
+-- Дамп даних таблиці `house_state_types`
 --
 
 INSERT INTO `house_state_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -425,7 +499,7 @@ INSERT INTO `house_state_types` (`id`, `title`, `created_at`, `updated_at`) VALU
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `house_types`
+-- Структура таблиці `house_types`
 --
 
 CREATE TABLE IF NOT EXISTS `house_types` (
@@ -436,7 +510,7 @@ CREATE TABLE IF NOT EXISTS `house_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `house_types`
+-- Дамп даних таблиці `house_types`
 --
 
 INSERT INTO `house_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -450,7 +524,7 @@ INSERT INTO `house_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `images`
+-- Структура таблиці `images`
 --
 
 CREATE TABLE IF NOT EXISTS `images` (
@@ -463,7 +537,7 @@ CREATE TABLE IF NOT EXISTS `images` (
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `localities`
+-- Структура таблиці `localities`
 --
 
 CREATE TABLE IF NOT EXISTS `localities` (
@@ -474,7 +548,7 @@ CREATE TABLE IF NOT EXISTS `localities` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1739 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `localities`
+-- Дамп даних таблиці `localities`
 --
 
 INSERT INTO `localities` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -2221,7 +2295,7 @@ INSERT INTO `localities` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `materials`
+-- Структура таблиці `materials`
 --
 
 CREATE TABLE IF NOT EXISTS `materials` (
@@ -2232,7 +2306,7 @@ CREATE TABLE IF NOT EXISTS `materials` (
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `materials`
+-- Дамп даних таблиці `materials`
 --
 
 INSERT INTO `materials` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -2249,7 +2323,7 @@ INSERT INTO `materials` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `migrations`
+-- Структура таблиці `migrations`
 --
 
 CREATE TABLE IF NOT EXISTS `migrations` (
@@ -2258,7 +2332,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `migrations`
+-- Дамп даних таблиці `migrations`
 --
 
 INSERT INTO `migrations` (`migration`, `batch`) VALUES
@@ -2295,12 +2369,13 @@ INSERT INTO `migrations` (`migration`, `batch`) VALUES
 ('2016_08_19_115344_create_table_flat', 1),
 ('2016_08_19_115404_create_table_house', 1),
 ('2016_08_19_115405_create_flats_images', 1),
-('2016_08_19_115406_create_houses_images', 1);
+('2016_08_19_115406_create_houses_images', 1),
+('2016_08_27_191248_deleting_foreign_adverts', 2);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `password_types`
+-- Структура таблиці `password_types`
 --
 
 CREATE TABLE IF NOT EXISTS `password_types` (
@@ -2311,7 +2386,7 @@ CREATE TABLE IF NOT EXISTS `password_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `password_types`
+-- Дамп даних таблиці `password_types`
 --
 
 INSERT INTO `password_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
@@ -2321,20 +2396,32 @@ INSERT INTO `password_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `references_point`
+-- Структура таблиці `references_point`
 --
 
 CREATE TABLE IF NOT EXISTS `references_point` (
   `id` int(10) unsigned NOT NULL,
-  `title` int(11) NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `references_point`
+--
+
+INSERT INTO `references_point` (`id`, `title`, `created_at`, `updated_at`) VALUES
+(19, 'Кулиничи', NULL, NULL),
+(20, 'Отель 7 звезд', NULL, NULL),
+(21, 'Магазин Руслана', NULL, NULL),
+(22, 'Трамвайная остановка', NULL, NULL),
+(23, 'Метро', NULL, NULL),
+(24, 'Зоомагазин', NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `regions`
+-- Структура таблиці `regions`
 --
 
 CREATE TABLE IF NOT EXISTS `regions` (
@@ -2346,7 +2433,7 @@ CREATE TABLE IF NOT EXISTS `regions` (
 ) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `regions`
+-- Дамп даних таблиці `regions`
 --
 
 INSERT INTO `regions` (`id`, `title`, `id_type`, `created_at`, `updated_at`) VALUES
@@ -2463,7 +2550,7 @@ INSERT INTO `regions` (`id`, `title`, `id_type`, `created_at`, `updated_at`) VAL
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `region_types`
+-- Структура таблиці `region_types`
 --
 
 CREATE TABLE IF NOT EXISTS `region_types` (
@@ -2474,7 +2561,7 @@ CREATE TABLE IF NOT EXISTS `region_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `region_types`
+-- Дамп даних таблиці `region_types`
 --
 
 INSERT INTO `region_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
@@ -2484,7 +2571,7 @@ INSERT INTO `region_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `roles`
+-- Структура таблиці `roles`
 --
 
 CREATE TABLE IF NOT EXISTS `roles` (
@@ -2495,7 +2582,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `roles`
+-- Дамп даних таблиці `roles`
 --
 
 INSERT INTO `roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -2508,7 +2595,7 @@ INSERT INTO `roles` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sewage_types`
+-- Структура таблиці `sewage_types`
 --
 
 CREATE TABLE IF NOT EXISTS `sewage_types` (
@@ -2519,7 +2606,7 @@ CREATE TABLE IF NOT EXISTS `sewage_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `sewage_types`
+-- Дамп даних таблиці `sewage_types`
 --
 
 INSERT INTO `sewage_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -2530,7 +2617,7 @@ INSERT INTO `sewage_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sites`
+-- Структура таблиці `sites`
 --
 
 CREATE TABLE IF NOT EXISTS `sites` (
@@ -2541,7 +2628,7 @@ CREATE TABLE IF NOT EXISTS `sites` (
 ) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `sites`
+-- Дамп даних таблиці `sites`
 --
 
 INSERT INTO `sites` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -2555,7 +2642,7 @@ INSERT INTO `sites` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `streets`
+-- Структура таблиці `streets`
 --
 
 CREATE TABLE IF NOT EXISTS `streets` (
@@ -2566,7 +2653,7 @@ CREATE TABLE IF NOT EXISTS `streets` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2209 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `streets`
+-- Дамп даних таблиці `streets`
 --
 
 INSERT INTO `streets` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -4783,7 +4870,7 @@ INSERT INTO `streets` (`id`, `title`, `created_at`, `updated_at`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `suburbs_locality`
+-- Структура таблиці `suburbs_locality`
 --
 
 CREATE TABLE IF NOT EXISTS `suburbs_locality` (
@@ -4795,7 +4882,7 @@ CREATE TABLE IF NOT EXISTS `suburbs_locality` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1739 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `suburbs_locality`
+-- Дамп даних таблиці `suburbs_locality`
 --
 
 INSERT INTO `suburbs_locality` (`id`, `id_suburb`, `id_locality`, `created_at`, `updated_at`) VALUES
@@ -6541,7 +6628,7 @@ INSERT INTO `suburbs_locality` (`id`, `id_suburb`, `id_locality`, `created_at`, 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `users`
+-- Структура таблиці `users`
 --
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -6551,12 +6638,26 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id_role` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Дамп даних таблиці `users`
+--
+
+INSERT INTO `users` (`id`, `login`, `password`, `id_role`, `created_at`, `updated_at`) VALUES
+(1, 'director', '123', 1, NULL, NULL),
+(2, 'admin', '123', 2, NULL, NULL),
+(3, 'secretar', '123', 3, NULL, NULL),
+(4, 'expert', '123', 4, NULL, NULL),
+(5, 'agent1', '123', 5, NULL, NULL),
+(6, 'agent2', '123', 5, NULL, NULL),
+(7, 'agent3', '123', 5, NULL, NULL),
+(8, 'agent4', '123', 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `water_types`
+-- Структура таблиці `water_types`
 --
 
 CREATE TABLE IF NOT EXISTS `water_types` (
@@ -6567,7 +6668,7 @@ CREATE TABLE IF NOT EXISTS `water_types` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Дамп данных таблицы `water_types`
+-- Дамп даних таблиці `water_types`
 --
 
 INSERT INTO `water_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
@@ -6576,25 +6677,23 @@ INSERT INTO `water_types` (`id`, `title`, `created_at`, `updated_at`) VALUES
 (3, 'Двор', NULL, NULL);
 
 --
--- Индексы сохранённых таблиц
+-- Індекси збережених таблиць
 --
 
 --
--- Индексы таблицы `adverts`
+-- Індекси таблиці `adverts`
 --
 ALTER TABLE `adverts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `adverts_id_agent_foreign` (`id_agent`),
-  ADD KEY `adverts_id_expert_foreign` (`id_expert`);
+  ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `adverts_error`
+-- Індекси таблиці `adverts_error`
 --
 ALTER TABLE `adverts_error`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `adverts_sites`
+-- Індекси таблиці `adverts_sites`
 --
 ALTER TABLE `adverts_sites`
   ADD PRIMARY KEY (`id`),
@@ -6602,7 +6701,7 @@ ALTER TABLE `adverts_sites`
   ADD KEY `adverts_sites_id_site_foreign` (`id_site`);
 
 --
--- Индексы таблицы `agents`
+-- Індекси таблиці `agents`
 --
 ALTER TABLE `agents`
   ADD PRIMARY KEY (`id`),
@@ -6610,32 +6709,32 @@ ALTER TABLE `agents`
   ADD KEY `agents_id_user_foreign` (`id_user`);
 
 --
--- Индексы таблицы `balcony_types`
+-- Індекси таблиці `balcony_types`
 --
 ALTER TABLE `balcony_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `bathroom_types`
+-- Індекси таблиці `bathroom_types`
 --
 ALTER TABLE `bathroom_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `buyers`
+-- Індекси таблиці `buyers`
 --
 ALTER TABLE `buyers`
   ADD PRIMARY KEY (`id`),
   ADD KEY `buyers_id_site_foreign` (`id_site`);
 
 --
--- Индексы таблицы `electricity_types`
+-- Індекси таблиці `electricity_types`
 --
 ALTER TABLE `electricity_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `experts`
+-- Індекси таблиці `experts`
 --
 ALTER TABLE `experts`
   ADD PRIMARY KEY (`id`),
@@ -6643,7 +6742,7 @@ ALTER TABLE `experts`
   ADD KEY `experts_id_user_foreign` (`id_user`);
 
 --
--- Индексы таблицы `expert_agents`
+-- Індекси таблиці `expert_agents`
 --
 ALTER TABLE `expert_agents`
   ADD PRIMARY KEY (`id`),
@@ -6651,7 +6750,7 @@ ALTER TABLE `expert_agents`
   ADD KEY `expert_agents_id_agent_foreign` (`id_agent`);
 
 --
--- Индексы таблицы `flats`
+-- Індекси таблиці `flats`
 --
 ALTER TABLE `flats`
   ADD PRIMARY KEY (`id`),
@@ -6667,7 +6766,7 @@ ALTER TABLE `flats`
   ADD KEY `flats_id_advert_foreign` (`id_advert`);
 
 --
--- Индексы таблицы `flats_images`
+-- Індекси таблиці `flats_images`
 --
 ALTER TABLE `flats_images`
   ADD PRIMARY KEY (`id`),
@@ -6675,31 +6774,31 @@ ALTER TABLE `flats_images`
   ADD KEY `flats_images_image_id_foreign` (`image_id`);
 
 --
--- Индексы таблицы `flat_schemas`
+-- Індекси таблиці `flat_schemas`
 --
 ALTER TABLE `flat_schemas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `flat_state_types`
+-- Індекси таблиці `flat_state_types`
 --
 ALTER TABLE `flat_state_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `flat_types`
+-- Індекси таблиці `flat_types`
 --
 ALTER TABLE `flat_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `gas_types`
+-- Індекси таблиці `gas_types`
 --
 ALTER TABLE `gas_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `houses`
+-- Індекси таблиці `houses`
 --
 ALTER TABLE `houses`
   ADD PRIMARY KEY (`id`),
@@ -6716,7 +6815,7 @@ ALTER TABLE `houses`
   ADD KEY `houses_id_advert_foreign` (`id_advert`);
 
 --
--- Индексы таблицы `houses_images`
+-- Індекси таблиці `houses_images`
 --
 ALTER TABLE `houses_images`
   ADD PRIMARY KEY (`id`),
@@ -6724,86 +6823,86 @@ ALTER TABLE `houses_images`
   ADD KEY `houses_images_image_id_foreign` (`image_id`);
 
 --
--- Индексы таблицы `house_state_types`
+-- Індекси таблиці `house_state_types`
 --
 ALTER TABLE `house_state_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `house_types`
+-- Індекси таблиці `house_types`
 --
 ALTER TABLE `house_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `images`
+-- Індекси таблиці `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `localities`
+-- Індекси таблиці `localities`
 --
 ALTER TABLE `localities`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `materials`
+-- Індекси таблиці `materials`
 --
 ALTER TABLE `materials`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `password_types`
+-- Індекси таблиці `password_types`
 --
 ALTER TABLE `password_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `references_point`
+-- Індекси таблиці `references_point`
 --
 ALTER TABLE `references_point`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `regions`
+-- Індекси таблиці `regions`
 --
 ALTER TABLE `regions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `regions_id_type_foreign` (`id_type`);
 
 --
--- Индексы таблицы `region_types`
+-- Індекси таблиці `region_types`
 --
 ALTER TABLE `region_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `roles`
+-- Індекси таблиці `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sewage_types`
+-- Індекси таблиці `sewage_types`
 --
 ALTER TABLE `sewage_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `sites`
+-- Індекси таблиці `sites`
 --
 ALTER TABLE `sites`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `streets`
+-- Індекси таблиці `streets`
 --
 ALTER TABLE `streets`
   ADD PRIMARY KEY (`id`);
 
 --
--- Индексы таблицы `suburbs_locality`
+-- Індекси таблиці `suburbs_locality`
 --
 ALTER TABLE `suburbs_locality`
   ADD PRIMARY KEY (`id`),
@@ -6811,239 +6910,232 @@ ALTER TABLE `suburbs_locality`
   ADD KEY `suburbs_locality_id_locality_foreign` (`id_locality`);
 
 --
--- Индексы таблицы `users`
+-- Індекси таблиці `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD KEY `users_id_role_foreign` (`id_role`);
 
 --
--- Индексы таблицы `water_types`
+-- Індекси таблиці `water_types`
 --
 ALTER TABLE `water_types`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT для сохранённых таблиц
+-- AUTO_INCREMENT для збережених таблиць
 --
 
 --
--- AUTO_INCREMENT для таблицы `adverts`
+-- AUTO_INCREMENT для таблиці `adverts`
 --
 ALTER TABLE `adverts`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
 --
--- AUTO_INCREMENT для таблицы `adverts_error`
+-- AUTO_INCREMENT для таблиці `adverts_error`
 --
 ALTER TABLE `adverts_error`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `adverts_sites`
+-- AUTO_INCREMENT для таблиці `adverts_sites`
 --
 ALTER TABLE `adverts_sites`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT для таблицы `agents`
+-- AUTO_INCREMENT для таблиці `agents`
 --
 ALTER TABLE `agents`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT для таблицы `balcony_types`
+-- AUTO_INCREMENT для таблиці `balcony_types`
 --
 ALTER TABLE `balcony_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT для таблицы `bathroom_types`
+-- AUTO_INCREMENT для таблиці `bathroom_types`
 --
 ALTER TABLE `bathroom_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT для таблицы `buyers`
+-- AUTO_INCREMENT для таблиці `buyers`
 --
 ALTER TABLE `buyers`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT для таблицы `electricity_types`
+-- AUTO_INCREMENT для таблиці `electricity_types`
 --
 ALTER TABLE `electricity_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `experts`
+-- AUTO_INCREMENT для таблиці `experts`
 --
 ALTER TABLE `experts`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT для таблицы `expert_agents`
+-- AUTO_INCREMENT для таблиці `expert_agents`
 --
 ALTER TABLE `expert_agents`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `flats`
+-- AUTO_INCREMENT для таблиці `flats`
 --
 ALTER TABLE `flats`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `flats_images`
+-- AUTO_INCREMENT для таблиці `flats_images`
 --
 ALTER TABLE `flats_images`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `flat_schemas`
+-- AUTO_INCREMENT для таблиці `flat_schemas`
 --
 ALTER TABLE `flat_schemas`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT для таблицы `flat_state_types`
+-- AUTO_INCREMENT для таблиці `flat_state_types`
 --
 ALTER TABLE `flat_state_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT для таблицы `flat_types`
+-- AUTO_INCREMENT для таблиці `flat_types`
 --
 ALTER TABLE `flat_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT для таблицы `gas_types`
+-- AUTO_INCREMENT для таблиці `gas_types`
 --
 ALTER TABLE `gas_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `houses`
+-- AUTO_INCREMENT для таблиці `houses`
 --
 ALTER TABLE `houses`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
--- AUTO_INCREMENT для таблицы `houses_images`
+-- AUTO_INCREMENT для таблиці `houses_images`
 --
 ALTER TABLE `houses_images`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `house_state_types`
+-- AUTO_INCREMENT для таблиці `house_state_types`
 --
 ALTER TABLE `house_state_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT для таблицы `house_types`
+-- AUTO_INCREMENT для таблиці `house_types`
 --
 ALTER TABLE `house_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT для таблицы `images`
+-- AUTO_INCREMENT для таблиці `images`
 --
 ALTER TABLE `images`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT для таблицы `localities`
+-- AUTO_INCREMENT для таблиці `localities`
 --
 ALTER TABLE `localities`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1739;
 --
--- AUTO_INCREMENT для таблицы `materials`
+-- AUTO_INCREMENT для таблиці `materials`
 --
 ALTER TABLE `materials`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=58;
 --
--- AUTO_INCREMENT для таблицы `password_types`
+-- AUTO_INCREMENT для таблиці `password_types`
 --
 ALTER TABLE `password_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT для таблицы `references_point`
+-- AUTO_INCREMENT для таблиці `references_point`
 --
 ALTER TABLE `references_point`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=25;
 --
--- AUTO_INCREMENT для таблицы `regions`
+-- AUTO_INCREMENT для таблиці `regions`
 --
 ALTER TABLE `regions`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=110;
 --
--- AUTO_INCREMENT для таблицы `region_types`
+-- AUTO_INCREMENT для таблиці `region_types`
 --
 ALTER TABLE `region_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT для таблицы `roles`
+-- AUTO_INCREMENT для таблиці `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT для таблицы `sewage_types`
+-- AUTO_INCREMENT для таблиці `sewage_types`
 --
 ALTER TABLE `sewage_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT для таблицы `sites`
+-- AUTO_INCREMENT для таблиці `sites`
 --
 ALTER TABLE `sites`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
--- AUTO_INCREMENT для таблицы `streets`
+-- AUTO_INCREMENT для таблиці `streets`
 --
 ALTER TABLE `streets`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2209;
 --
--- AUTO_INCREMENT для таблицы `suburbs_locality`
+-- AUTO_INCREMENT для таблиці `suburbs_locality`
 --
 ALTER TABLE `suburbs_locality`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1739;
 --
--- AUTO_INCREMENT для таблицы `users`
+-- AUTO_INCREMENT для таблиці `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
--- AUTO_INCREMENT для таблицы `water_types`
+-- AUTO_INCREMENT для таблиці `water_types`
 --
 ALTER TABLE `water_types`
   MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
--- Ограничения внешнего ключа сохраненных таблиц
+-- Обмеження зовнішнього ключа збережених таблиць
 --
 
 --
--- Ограничения внешнего ключа таблицы `adverts`
---
-ALTER TABLE `adverts`
-  ADD CONSTRAINT `adverts_id_agent_foreign` FOREIGN KEY (`id_agent`) REFERENCES `agents` (`id`),
-  ADD CONSTRAINT `adverts_id_expert_foreign` FOREIGN KEY (`id_expert`) REFERENCES `experts` (`id`);
-
---
--- Ограничения внешнего ключа таблицы `adverts_sites`
+-- Обмеження зовнішнього ключа таблиці `adverts_sites`
 --
 ALTER TABLE `adverts_sites`
   ADD CONSTRAINT `adverts_sites_id_advert_foreign` FOREIGN KEY (`id_advert`) REFERENCES `adverts` (`id`),
   ADD CONSTRAINT `adverts_sites_id_site_foreign` FOREIGN KEY (`id_site`) REFERENCES `sites` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `agents`
+-- Обмеження зовнішнього ключа таблиці `agents`
 --
 ALTER TABLE `agents`
   ADD CONSTRAINT `agents_id_password_type_foreign` FOREIGN KEY (`id_password_type`) REFERENCES `password_types` (`id`),
   ADD CONSTRAINT `agents_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `buyers`
+-- Обмеження зовнішнього ключа таблиці `buyers`
 --
 ALTER TABLE `buyers`
   ADD CONSTRAINT `buyers_id_site_foreign` FOREIGN KEY (`id_site`) REFERENCES `sites` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `experts`
+-- Обмеження зовнішнього ключа таблиці `experts`
 --
 ALTER TABLE `experts`
   ADD CONSTRAINT `experts_id_password_type_foreign` FOREIGN KEY (`id_password_type`) REFERENCES `password_types` (`id`),
   ADD CONSTRAINT `experts_id_user_foreign` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `expert_agents`
+-- Обмеження зовнішнього ключа таблиці `expert_agents`
 --
 ALTER TABLE `expert_agents`
   ADD CONSTRAINT `expert_agents_id_agent_foreign` FOREIGN KEY (`id_agent`) REFERENCES `agents` (`id`),
   ADD CONSTRAINT `expert_agents_id_expert_foreign` FOREIGN KEY (`id_expert`) REFERENCES `experts` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `flats`
+-- Обмеження зовнішнього ключа таблиці `flats`
 --
 ALTER TABLE `flats`
   ADD CONSTRAINT `flats_id_advert_foreign` FOREIGN KEY (`id_advert`) REFERENCES `adverts` (`id`),
@@ -7058,14 +7150,14 @@ ALTER TABLE `flats`
   ADD CONSTRAINT `flats_id_type_foreign` FOREIGN KEY (`id_type`) REFERENCES `flat_types` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `flats_images`
+-- Обмеження зовнішнього ключа таблиці `flats_images`
 --
 ALTER TABLE `flats_images`
   ADD CONSTRAINT `flats_images_flat_id_foreign` FOREIGN KEY (`flat_id`) REFERENCES `flats` (`id`),
   ADD CONSTRAINT `flats_images_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `houses`
+-- Обмеження зовнішнього ключа таблиці `houses`
 --
 ALTER TABLE `houses`
   ADD CONSTRAINT `houses_id_advert_foreign` FOREIGN KEY (`id_advert`) REFERENCES `adverts` (`id`),
@@ -7081,27 +7173,27 @@ ALTER TABLE `houses`
   ADD CONSTRAINT `houses_id_water_foreign` FOREIGN KEY (`id_water`) REFERENCES `water_types` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `houses_images`
+-- Обмеження зовнішнього ключа таблиці `houses_images`
 --
 ALTER TABLE `houses_images`
   ADD CONSTRAINT `houses_images_house_id_foreign` FOREIGN KEY (`house_id`) REFERENCES `houses` (`id`),
   ADD CONSTRAINT `houses_images_image_id_foreign` FOREIGN KEY (`image_id`) REFERENCES `images` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `regions`
+-- Обмеження зовнішнього ключа таблиці `regions`
 --
 ALTER TABLE `regions`
   ADD CONSTRAINT `regions_id_type_foreign` FOREIGN KEY (`id_type`) REFERENCES `region_types` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `suburbs_locality`
+-- Обмеження зовнішнього ключа таблиці `suburbs_locality`
 --
 ALTER TABLE `suburbs_locality`
   ADD CONSTRAINT `suburbs_locality_id_locality_foreign` FOREIGN KEY (`id_locality`) REFERENCES `localities` (`id`),
   ADD CONSTRAINT `suburbs_locality_id_suburb_foreign` FOREIGN KEY (`id_suburb`) REFERENCES `regions` (`id`);
 
 --
--- Ограничения внешнего ключа таблицы `users`
+-- Обмеження зовнішнього ключа таблиці `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_id_role_foreign` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id`);

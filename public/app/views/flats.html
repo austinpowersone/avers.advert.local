@@ -24,22 +24,22 @@
     <tbody data-link="row" class="rowlink">
         <tr ng-repeat="flat in flats">
             <td><a href="" ui-sref="flat_details({id: flat.id})"></a>{{flat.id}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_rooms}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.type}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_rooms}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.type.title}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.floor}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_floors}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_floor}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.living_square}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.total_square}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.kitchen_square}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.cost}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.schema}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.material}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.bathroom}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.balcony}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.state}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.region}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.reference_point}}</td>
-            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.street}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.schema.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.material.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.bathroom.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.balcony.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.state.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.region.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.reference_point.title}}</td>
+            <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.street.title}}</td>
             <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.house_number}}</td>
         </tr>
     </tbody>

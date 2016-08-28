@@ -17,6 +17,7 @@ class CreateTableHouse extends Migration
             $table->integer('count_of_rooms');
             $table->integer('id_type')->unsigned();
             $table->foreign('id_type')->references('id')->on('house_types');
+            $table->integer('count_of_floors');
             $table->double('living_square');
             $table->double('kitchen_square');
             $table->double('total_square');
@@ -44,6 +45,7 @@ class CreateTableHouse extends Migration
             $table->string('header', 53);
             $table->string('description', 2000);
             $table->string('add_information');
+            $table->integer('rating');
             $table->integer('id_advert')->unsigned();
             $table->foreign('id_advert')->references('id')->on('adverts');
             $table->timestamps();

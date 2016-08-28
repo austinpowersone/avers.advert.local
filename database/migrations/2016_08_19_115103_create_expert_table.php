@@ -16,7 +16,7 @@ class CreateExpertTable extends Migration
             $table->increments('id')->unsigned();
             $table->integer('id_password_type')->unsigned();
             $table->foreign('id_password_type')->references('id')->on('password_types');
-            $table->char('phone',12);
+            $table->char('phone',15);
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();

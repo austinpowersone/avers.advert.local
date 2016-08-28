@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\House;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,7 +16,8 @@ class HouseController extends Controller
      */
     public function index()
     {
-        //
+        $houses = House::with('type','material','sewage','water','gas','electricity','state','reference_point','region','street','advert')->get();
+        return $houses;
     }
 
     /**
