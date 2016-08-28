@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/fonts/BebasNeue.ttf">
 
-    <title>Index</title>
+    <title>AVERS</title>
     <script src="/components/jquery/dist/jquery.min.js"></script>
     <script src="/js/jquery.dataTables.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
@@ -29,6 +29,7 @@
     <script src="/app/services/MaterialService.js"></script>
     <script src="/app/services/RegionService.js"></script>
     <script src="/app/services/HouseService.js"></script>
+    <script src="/app/services/UserService.js"></script>
 
     <script src="/app/controllers/FlatController.js"></script>
     <script src="/app/controllers/IndexController.js"></script>
@@ -37,6 +38,8 @@
     <script src="/app/controllers/RegionController.js"></script>
     <script src="/app/controllers/HouseDetailsController.js"></script>
     <script src="/app/controllers/FlatDetailsController.js"></script>
+    <script src="/app/controllers/UserDetailsController.js"></script>
+    <script src="/app/controllers/UserController.js"></script>
 </head>
 
 <body ng-app="advertApp">
@@ -1138,11 +1141,11 @@
                 <button type="button" ng-show="isFlats" class="btn btn-primary" id="call_modal" data-toggle="modal" data-target="#modal_3">Добавить рекламу квартиры</button>
                 <button type="button" ng-show="!isFlats" class="btn btn-primary" id="call_modal" data-toggle="modal" data-target="#modal_4">Добавить рекламу дома</button>
                 <button type="button" class="btn btn-primary" id="call_modal" data-toggle="modal" data-target="#modal_4">Внести показ</button>
-                <div class="dropdown">
+                <div class="dropdown" ng-controller="UserController">
                     <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"></button>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Мой профиль</a></li>
-                        <li><a href="#">Выход</a></li>
+                        <li><a href="" ui-sref="user_details({id: user.id})">Мой профиль</a></li>
+                        <li><a href="/logout">Выход</a></li>
                     </ul>
                 </div>
             </div>

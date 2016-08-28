@@ -14,7 +14,7 @@ class User extends Authenticatable
     protected $table= 'users';
 
     protected $fillable = [
-        'login', 'password',
+        'login', 'password', 'id_role'
     ];
 
     /**
@@ -23,6 +23,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
+        '',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'id_role');
+    }
 }

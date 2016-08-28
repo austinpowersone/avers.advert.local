@@ -2,6 +2,11 @@ var advertApp = angular.module('advertApp', ['ngResource','ui.router']);
 
 advertApp.config(['$resourceProvider','$stateProvider', function ($resourceProvider, $stateProvider) {
     $stateProvider
+        .state('/',{
+            url: "/",
+            templateUrl: 'app/views/register.html',
+            controller: 'RegisterController'
+        })
         .state('flats',{
             url: "/flats",
             templateUrl: 'app/views/flats.html',
@@ -21,6 +26,11 @@ advertApp.config(['$resourceProvider','$stateProvider', function ($resourceProvi
             url: "/houses/:id",
             templateUrl: 'app/views/house_details.html',
             controller: 'HouseDetailsController'
+        })
+        .state('user_details',{
+            url: "/users/:id",
+            templateUrl: 'app/views/user_details.html',
+            controller: 'UserDetailsController'
         })
     $resourceProvider.defaults.stripTrailingSlashes = false;
 }]);
