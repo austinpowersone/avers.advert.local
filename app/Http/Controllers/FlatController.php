@@ -48,7 +48,8 @@ class FlatController extends Controller
      */
     public function show($id)
     {
-        //
+        $flat = Flat::with('type','schema','material','bathroom','balcony','state','reference_point','street','advert','region')->find($id);
+        return $flat;
     }
 
     /**

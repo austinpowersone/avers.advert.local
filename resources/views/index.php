@@ -36,6 +36,7 @@
     <script src="/app/controllers/MaterialController.js"></script>
     <script src="/app/controllers/RegionController.js"></script>
     <script src="/app/controllers/HouseDetailsController.js"></script>
+    <script src="/app/controllers/FlatDetailsController.js"></script>
 </head>
 
 <body ng-app="advertApp">
@@ -1152,7 +1153,6 @@
                 <a href="" ng-click="isFlats = false" ui-sref="houses" class="btn btn-group">БД Домов</a>
                 <a href="db-customers.html" ng-show="isFlats" class="btn btn-group">БД Покупателей квартир</a>
                 <a href="db-house-customers.html" ng-show="!isFlats" class="btn btn-group">БД Покупателей домов</a>
-                <a href="" ui-sref="material" class="btn btn-group">Materials</a>
             </div>
         </div>
     </div>

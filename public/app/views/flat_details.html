@@ -1,0 +1,46 @@
+<table id="layout" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Количество комнат</th>
+        <th>Тип</th>
+        <th>Этаж</th>
+        <th>Количество этажей</th>
+        <th>Жилая площадь</th>
+        <th>Общая площадь</th>
+        <th>Площадь кухни</th>
+        <th>Стоимость</th>
+        <th>Схема</th>
+        <th>Материал</th>
+        <th>Ванная</th>
+        <th>Балкон</th>
+        <th>Состояние</th>
+        <th>Район</th>
+        <th>Ориентир</th>
+        <th>Улица</th>
+        <th>Номер дома</th>
+    </tr>
+    </thead>
+    <tbody data-link="row" class="rowlink">
+    <tr>
+        <td><a href="" ui-sref="flat_details({id: flat.id})"></a>{{flat.id}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_rooms}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.type.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.floor}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_floor}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.living_square}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.total_square}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.kitchen_square}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.cost}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.schema.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.material.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.bathroom.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.balcony.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.state.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.region.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.reference_point.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.street.title}}</td>
+        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.house_number}}</td>
+    </tr>
+    </tbody>
+</table>

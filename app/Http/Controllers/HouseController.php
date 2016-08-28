@@ -49,7 +49,8 @@ class HouseController extends Controller
      */
     public function show($id)
     {
-        //
+        $house = House::with('type','material','sewage','water','gas','electricity','state','reference_point','region','street','advert')->find($id);
+        return $house;
     }
 
     /**

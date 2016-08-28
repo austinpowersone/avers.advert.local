@@ -2,11 +2,6 @@ var advertApp = angular.module('advertApp', ['ngResource','ui.router']);
 
 advertApp.config(['$resourceProvider','$stateProvider', function ($resourceProvider, $stateProvider) {
     $stateProvider
-        .state('material',{
-            url: "/materials",
-            templateUrl: 'app/views/material.html',
-            controller: 'MaterialController'
-        })
         .state('flats',{
             url: "/flats",
             templateUrl: 'app/views/flats.html',
