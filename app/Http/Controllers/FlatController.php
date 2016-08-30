@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Flat;
 use Illuminate\Http\Request;
-use App\Http\Requests;
+use Illuminate\Support\Facades\Log;
 
 class FlatController extends Controller
 {
@@ -13,10 +13,43 @@ class FlatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $flats = Flat::with('type','schema','material','bathroom','balcony','state','reference_point','street','advert','region')->get();
-        return $flats;
+        $flats = Flat::with('type', 'schema', 'material', 'bathroom', 'balcony', 'state', 'reference_point', 'street', 'advert', 'region');
+        Log::info($request->input());
+        if(count($request->input()) > 0){
+            if($request->has('street')){
+                $street = json_decode($request->input('street'), true);
+                Log::info($street['title']);
+                $flats->where('id_street', $street['id']);
+            }
+            if($request->has('region')){
+                $region = json_decode($request->input('region'), true);
+                Log::info($region['title']);
+                $flats->where('id_region', $region['id']);
+            }            
+            if($request->has('id')){
+                Log::info($request->input('id'));
+            }
+            if($request->has('type')){
+                $type = json_decode($request->input('type'), true);
+                Log::info($type['title']);
+                $flats->where('id_type', $type['id']);
+            }
+            if($request->has('rooms_from') && ($request->has('rooms_to'))){
+                $flats->whereBetween('count_of_rooms',[$request->input('rooms_from'), $request->input('rooms_to')]);
+            }else{
+                if($request->has('rooms_from')){
+                Log::info($request->input('rooms_from'));
+                $flats->where('count_of_rooms','>',$request->input('rooms_from'));
+            }
+            if($request->has('rooms_to')){
+                Log::info($request->input('rooms_to'));
+                $flats->where('count_of_rooms', '<', $request->input('rooms_to'));
+            }
+            }            
+        }        
+        return $flats->get();
     }
 
     /**

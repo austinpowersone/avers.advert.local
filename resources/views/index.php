@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="advertApp" lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,8 +24,10 @@
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="/app/app.js"></script>
-
+    
     <script src="/app/services/FlatService.js"></script>
+    <script src="/app/services/FlatTypeService.js"></script>
+    <script src="/app/services/StreetService.js"></script>
     <script src="/app/services/MaterialService.js"></script>
     <script src="/app/services/RegionService.js"></script>
     <script src="/app/services/HouseService.js"></script>
@@ -40,9 +42,10 @@
     <script src="/app/controllers/FlatDetailsController.js"></script>
     <script src="/app/controllers/UserDetailsController.js"></script>
     <script src="/app/controllers/UserController.js"></script>
+    <script src="/app/controllers/SearchFlatController.js"></script>
 </head>
 
-<body ng-app="advertApp">
+<body>
 <script>
     $(function(){
         if (screen.height > $( document ).height()) {
@@ -51,7 +54,7 @@
     });
 </script>
 
-<div class="modal fade" id="modal_1">
+<div ng-controller="SearchFlatController" class="modal fade" id="modal_1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -61,7 +64,7 @@
                 <h4>Фильтр рекламы квартир</h4>
             </div>
             <div class="modal-body">
-                <form name="flat_filter" method="post" action="/flats" class="form form-small form-horizontal global-flat-filter" role="form">
+                <form ng-submit="FilterFlat()" name="flat_filter" class="form form-small form-horizontal global-flat-filter" role="form">
                     <div class="row">
 
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clear-all first">
@@ -84,15 +87,14 @@
                             <div class="form-group type">
                                 <div class="col-xs-12 col-sm-12">
                                     <label for="flat_filter_type" class="">Тип</label>
-
-                                    <select id="flat_filter_type" ng-model="query.type" data-live-search="true" name="flat_filter[type]" data-search="type" class="selectpicker form-control input-sm">
-                                        <option value="">Всех</option>
-                                        <option value="г">Гостинка</option>
-                                        <option value="п">Подселенка</option>
-                                        <option value="и">Изолированная</option>
-                                        <option value="н">Новострой</option>
-                                        <option value="гн">Гостинка новострой</option>
-                                    </select>
+                                    <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="types"
+                                            ng-model="query.type"
+                                            ng-options="type.title for type in types"
+                                    ></select>
                                 </div>
                             </div>
 
@@ -102,11 +104,11 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
                                             <label for="flat_filter_roomCountFrom">от</label>
-                                            <input type="text" id="flat_filter_roomCountFrom" ng-model="query.rooms.from" name="flat_filter[roomCountFrom]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" id="flat_filter_roomCountFrom" ng-model="query.roomsfrom" name="flat_filter[roomCountFrom]" class="form-control input-sm form-control input-sm">
                                         </div>
                                         <div class="col-sm-6 col-md-6">
                                             <label for="flat_filter_roomCountTo">до</label>
-                                            <input type="text" id="flat_filter_roomCountTo" ng-model="query.rooms.to" name="flat_filter[roomCountTo]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" id="flat_filter_roomCountTo" ng-model="query.roomsto" name="flat_filter[roomCountTo]" class="form-control input-sm form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -141,75 +143,41 @@
                                     <label>Цена От - До:</label>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
-                                            <input type="text" id="flat_filter_priceFrom" ng-model="query.price.from" name="flat_filter[priceFrom]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" id="flat_filter_priceFrom" ng-model="query.pricefrom" name="flat_filter[priceFrom]" class="form-control input-sm form-control input-sm">
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <input type="text" id="flat_filter_priceTo" ng-model="query.price.to" name="flat_filter[priceTo]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" id="flat_filter_priceTo" ng-model="query.priceto" name="flat_filter[priceTo]" class="form-control input-sm form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clear-all second">
-
-                            <div class="form-group">
-                                <div class="col-sm-12">
-
-                                    <div id="flat_filter_status" class="checkboxes-holder">
-                                        <div class="status-block">
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.actve" id="flat_filter_status_0" name="flat_filter[status]" required="required" value="active" checked="checked">
-                                                <label for="flat_filter_status_0" class="required">Действующие</label>
-                                            </div>
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.deleted" id="flat_filter_status_1" name="flat_filter[status]" required="required" value="deleted">
-                                                <label for="flat_filter_status_1" class="required">Удаленные</label>
-                                            </div>
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.all" id="flat_filter_status_2" name="flat_filter[status]" required="required" value="all">
-                                                <label for="flat_filter_status_2" class="required">Все</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <hr>
                             <div class="form-group region">
                                 <div class="col-xs-12 col-sm-12">
                                     <label for="flat_filter_region">Район</label>
-                                    <select ng-model="query.region" id="flat_filter_region" name="flat_filter[region]" data-live-search="true" data-search="street" class="selectpicker form-control input-sm">
-                                        <option value="">Алексеевка</option>
-                                        <option>Северная салтовка</option>
-                                        <option>606 м-р</option>
-                                        <option>607 м-р</option>
-                                        <option>Холодная гора</option>
-                                        <option>Южный вокзал</option>
-                                        <option>Чугуевский</option>
-                                        <option>Краснокутский</option>
-                                        <option>Барвенковский</option>
-                                        <option>Изюмский</option>
-                                        <option>Мерефянский</option>
-                                        <option>Змиевский</option>
-                                    </select>
+                                        <select class="form-control"
+                                                data-style="btn-primary"
+                                                data-live-search="true"
+                                                data-selectpicker
+                                                data-collection-name="regions"
+                                                ng-model="query.region"
+                                                ng-options="region.title for region in regions"
+                                        ></select>
                                 </div>
                             </div>
-                            <hr>
                             <div class="form-group street">
                                 <div class="col-xs-12 col-sm-12">
                                     <label for="flat_filter_street">Улица</label>
-                                    
-                                    <select ng-model="query.street" id="flat_filter_street" name="flat_filter[street]" data-live-search="true" data-search="street" class="selectpicker form-control input-sm">
-                                        <option value="">Героев труда</option>
-                                        <option value="г">Блюхера улица</option>
-                                        <option value="п">50 лет СССР</option>
-                                        <option value="и">Третей пятилетки</option>
-                                        <option value="н">Проспект ленина</option>
-                                        <option value="гн">Московский проспект</option>
-                                    </select>
+                                    <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="streets"
+                                            ng-model="query.street"
+                                            ng-options="street.title for street in streets"
+                                    ></select>
                                 </div>
                             </div>
                         </div>
@@ -224,11 +192,11 @@
                                                 <div id="flat_filter_date_type" class="checkboxes-holder">
                                                     <label for="flat_filter_title">Дата</label>
                                                     <div class="block">
-                                                        <input type="radio" ng-model="query.date.create" id="flat_filter_date_type_0" name="flat_filter[date_type]" required="required" value="createdAt">
+                                                        <input type="radio" ng-model="query.date.create" id="flat_filter_date_type_0" name="flat_filter[date_type]" value="createdAt">
                                                         <label for="flat_filter_date_type_0" class="required">Создания</label>
                                                     </div>
                                                     <div class="block">
-                                                        <input type="radio" ng-model="query.date.correct" id="flat_filter_date_type_1" name="flat_filter[date_type]" required="required" value="updatedAt" checked="checked">
+                                                        <input type="radio" ng-model="query.date.correct" id="flat_filter_date_type_1" name="flat_filter[date_type]" value="updatedAt" checked="checked">
                                                         <label for="flat_filter_date_type_1" class="required">Коррекции</label>
                                                     </div>
                                                 </div>
@@ -258,15 +226,15 @@
                                         <div class="row">
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorFrom">от</label>
-                                                <input type="text" ng-model="query.floor.from" id="flat_filter_floorFrom" name="flat_filter[floorFrom]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorfrom" id="flat_filter_floorFrom" name="flat_filter[floorFrom]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorfloorTo">до</label>
-                                                <input type="text" ng-model="query.floor.to" id="flat_filter_floorTo" name="flat_filter[floorTo]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorto" id="flat_filter_floorTo" name="flat_filter[floorTo]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-6 col-md-6">
                                                 <label for="flat_filter_floorValue" class="">Точный этаж</label>
-                                                <input type="text" ng-model="query.floor.concrete" id="flat_filter_floorValue" name="flat_filter[floorValue]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorconcrete" id="flat_filter_floorValue" name="flat_filter[floorValue]" class="form-control input-sm form-control input-sm">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 checkboxes-holder no-padding">
@@ -291,15 +259,15 @@
                                         <div class="row">
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorCountFrom">от</label>
-                                                <input type="text" ng-model="query.floorCount.from" id="flat_filter_floorCountFrom" name="flat_filter[floorCountFrom]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorCountfrom" id="flat_filter_floorCountFrom" name="flat_filter[floorCountFrom]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorCountTo">до</label>
-                                                <input type="text" ng-model="query.floorCount.to" id="flat_filter_floorCountTo" name="flat_filter[floorCountTo]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorCountto" id="flat_filter_floorCountTo" name="flat_filter[floorCountTo]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-6 col-md-6">
                                                 <label for="flat_filter_floorCountValue">Точно этажей</label>
-                                                <input type="text" ng-model="query.floorCount.cocnrete" id="flat_filter_floorCountValue" name="flat_filter[floorCountValue]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.floorCountconcrete" id="flat_filter_floorCountValue" name="flat_filter[floorCountValue]" class="form-control input-sm form-control input-sm">
                                             </div>
                                         </div>
                                         <div class="row">
@@ -314,13 +282,11 @@
                                 </div>
                             </div>
                         </div>
-
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" class="btn btn-group btn-success" value="Применить фильтр" />
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" ng-click="searchByFilter" id="flat_submit" name="flat[submit]" class="btn btn-success">Применить фильтр</button>
-                <button type="submit" ng-click="cancelFilter" id="flat_submit" name="flat[submit]" class="btn btn-danger">Сбросить фильтр</button>
             </div>
         </div>
     </div>
@@ -566,7 +532,7 @@
             </div>
             <div class="modal-footer">
                 <button type="submit" id="flat_submit" name="flat[submit]" class="btn btn-success">Применить фильтр</button>
-                <button type="submit" id="flat_submit" name="flat[submit]" class="btn btn-danger">Сбросить фильтр</button>
+                <button type="submit" ng-click="" id="flat_submit" name="flat[submit]" class="btn btn-danger">Сбросить фильтр</button>
             </div>
         </div>
     </div>
@@ -1168,7 +1134,10 @@
     $(document).ready(function() {
         $('#layout').DataTable();
         $('tbody.rowlink').rowlink('a');
-    } );
+        $('#modal_1').on('hidden', function () {
+            $(this).removeData('modal');
+        });
+    } );    
 </script>
 </body>
 </html>
