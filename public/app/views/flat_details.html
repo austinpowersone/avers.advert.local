@@ -1,46 +1,198 @@
-<table id="layout" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-    <thead>
-    <tr>
-        <th>№</th>
-        <th>Количество комнат</th>
-        <th>Тип</th>
-        <th>Этаж</th>
-        <th>Количество этажей</th>
-        <th>Жилая площадь</th>
-        <th>Общая площадь</th>
-        <th>Площадь кухни</th>
-        <th>Стоимость</th>
-        <th>Схема</th>
-        <th>Материал</th>
-        <th>Ванная</th>
-        <th>Балкон</th>
-        <th>Состояние</th>
-        <th>Район</th>
-        <th>Ориентир</th>
-        <th>Улица</th>
-        <th>Номер дома</th>
-    </tr>
-    </thead>
-    <tbody data-link="row" class="rowlink">
-    <tr>
-        <td><a href="" ui-sref="flat_details({id: flat.id})"></a>{{flat.id}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_rooms}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.type.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.floor}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.count_of_floor}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.living_square}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.total_square}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.kitchen_square}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.cost}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.schema.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.material.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.bathroom.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.balcony.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.state.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.region.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.reference_point.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.street.title}}</td>
-        <td><a href="" ui-sref="flat_details({id : flat.id})"></a>{{flat.house_number}}</td>
-    </tr>
-    </tbody>
-</table>
+<div class="offer-box">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Сотрудник</th>
+                    <th>Цена</th>
+                    <th>Телефон</th>                    
+                    <th>Роль</th>
+                    <th>Добавлен</th>                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td >{{flat.user.FIO}}</td>
+                    <td>
+                        <span>{{flat.cost}}</span>
+                        <span>$</span>
+                    </td>
+                    <td>
+                        <span>{{flat.user.phone}}</span>
+                    </td>
+                    <td>
+                        <span>{{flat.role.title}}</span>
+                    </td>
+                    <td>
+                        <span>{{flat.advert.date}}</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="three">
+            <div class="two">
+                <div class="col">
+                    <table class="table table-condensed offer-values">
+                        <tbody>
+                            <tr>
+                                <th>Номер</th>
+                                <td>
+                                    <span>{{flat.id}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Дата добавления</th>
+                                <td>
+                                    <span>{{flat.advert.date}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ответственный</th>
+                                <td>
+                                    <span>{{flat.user.FIO}}</span>
+                                </td>
+                            </tr>                                                        
+                            <tr>
+                                <th>Район</th>
+                                <td>
+                                    <span>{{flat.region.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Ориентир</th>
+                                <td>
+                                    <span>{{flat.reference_point.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Улица</th>
+                                <td>
+                                    <span>{{flat.street.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Дом/корпус/квартира</th>
+                                <td>
+                                    <span>{{flat.house_number}}</span>
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <th>Цена</th>
+                                <td>
+                                    <span>{{flat.cost}}</span>
+                                </td>
+                            </tr>                                                        
+                            <tr>
+                                <th>Этаж</th>
+                                <td>
+                                    <span>{{flat.floor}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Этажность</th>
+                                <td>
+                                    <span>{{flat.count_of_floor}}</span>
+                                </td>
+                            </tr>                                                        
+                            <tr >
+                                <th>Количество комнат</th>
+                                <td>
+                                    <span>{{flat.count_of_rooms}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Тип комнат</th>
+                                <td>
+                                    <span>{{flat.schema.title}}</span>
+                                </td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-condensed offer-values" >
+                        <tbody>
+                            <tr>
+                                <th>Санузел</th>
+                                <td>
+                                    <span>{{flat.bathroom.title}}</span>
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <th>Ремонт</th>
+                                <td>
+                                    <span >{{flat.state.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Балкон/лоджия</th>
+                                <td>
+                                    <span>{{flat.balcony.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Тип дома</th>
+                                <td>
+                                    <span>{{flat.type.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Общая площадь комнат (м, кв)</th>
+                                <td>
+                                    <span>{{flat.total_square}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Площадь кухни (м, кв)</th>
+                                <td>
+                                    <span>{{flat.kitchen_square}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Жилая площадь (м, кв)</th>
+                                <td>
+                                    <span>{{flat.living_square}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Информация</th>
+                                <td>
+                                    <span>{{flat.header}}</span>
+                                </td>
+                            </tr>                            
+                            <tr>
+                                <th>Материал</th>
+                                <td>
+                                    <span>{{flat.material.title}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Количество звонков чистых/посредников</th>
+                                <td>
+                                    <span>{{flat.advert.call_clear}}</span>  /                                  
+                                    <span>{{flat.advert.call_mediators}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col">
+                <div class="alert alert-info">
+                    Статус: <b>{{flat.status}}</b>
+                    <span style="display: none;">                                
+                    </span>
+                </div>
+                <div class="alert alert-info alert-with-content">Описание</div>
+                <div class="alert-content alert-info">
+                    {{flat.add_information}}
+                </div>
+                <div class="alert alert-pale alert-with-content">Адрес строкой</div>
+                <div class="alert-content alert-pale" >
+                    Регион {{flat.region.title}},
+                    {{flat.street.title}},
+                    ориентир {{flat.reference_point.title}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

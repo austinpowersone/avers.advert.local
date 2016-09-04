@@ -1,5 +1,5 @@
-angular.module('advertApp').controller('HouseController', ['$scope','House',
-    function ($scope, House) {
-        $scope.houses = House.query();
+angular.module('advertApp').controller('HouseController', ['$rootScope','House',
+    function ($rootScope, House) {
+        $rootScope.houses = House.query();
     }]);
 

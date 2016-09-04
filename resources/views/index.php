@@ -32,6 +32,7 @@
     <script src="/app/services/RegionService.js"></script>
     <script src="/app/services/HouseService.js"></script>
     <script src="/app/services/UserService.js"></script>
+    <script src="/app/services/HouseTypeService.js"></script>
 
     <script src="/app/controllers/FlatController.js"></script>
     <script src="/app/controllers/IndexController.js"></script>
@@ -43,6 +44,7 @@
     <script src="/app/controllers/UserDetailsController.js"></script>
     <script src="/app/controllers/UserController.js"></script>
     <script src="/app/controllers/SearchFlatController.js"></script>
+    <script src="/app/controllers/SearchHouseController.js"></script>
 </head>
 
 <body>
@@ -58,7 +60,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" id="setCookie" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
+                <button ng-click="cancelFilter()" class="close" id="setCookie1" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
                     <i class="fa fa-close"></i>
                 </button>
                 <h4>Фильтр рекламы квартир</h4>
@@ -284,7 +286,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-group btn-success" value="Применить фильтр" />
+                        <button type="submit" class="btn btn-group btn-success">Применить фильтр</button>
+                        <button ng-click="cancelFilter()" class="btn btn-danger">Сбросить фильтр</button> 
                     </div>
                 </form>
             </div>
@@ -293,19 +296,18 @@
 </div>
 
 
-<div class="modal fade" id="modal_2">
+<div ng-controller="SearchHouseController" class="modal fade" id="modal_2">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" id="setCookie" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
+                <button class="close" ng-click="cancelFilter()" id="setCookie2" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
                     <i class="fa fa-close"></i>
                 </button>
                 <h4>Фильтр рекламы домов</h4>
             </div>
             <div class="modal-body">
-                <form name="flat_filter" method="post" action="/flats" class="form form-small form-horizontal global-flat-filter" role="form">
+                <form ng-submit="FilterHouse()" name="flat_filter" class="form form-small form-horizontal global-flat-filter" role="form">
                     <div class="row">
-
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clear-all first">
 
                             <div class="form-group col-xs-6 col-sm-6 col-md-6 phone-filt no-padding">
@@ -327,14 +329,14 @@
                                 <div class="col-xs-12 col-sm-12">
                                     <label for="flat_filter_type" class="">Тип</label>
 
-                                    <select id="flat_filter_type" ng-model="query.house.type" name="flat_filter[type]" data-live-search="true" data-search="type" class="selectpicker form-control input-sm">
-                                        <option value="">Всех</option>
-                                        <option value="г">Гостинка</option>
-                                        <option value="п">Подселенка</option>
-                                        <option value="и">Изолированная</option>
-                                        <option value="н">Новострой</option>
-                                        <option value="гн">Гостинка новострой</option>
-                                    </select>
+                                    <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="types"
+                                            ng-model="query.house.type"
+                                            ng-options="type.title for type in types"
+                                    ></select>
                                 </div>
                             </div>
 
@@ -344,11 +346,11 @@
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
                                             <label for="flat_filter_roomCountFrom">от</label>
-                                            <input type="text" ng-model="query.house.rooms.from" id="flat_filter_roomCountFrom" name="flat_filter[roomCountFrom]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" ng-model="query.house.roomsfrom" id="flat_filter_roomCountFrom" name="flat_filter[roomCountFrom]" class="form-control input-sm form-control input-sm">
                                         </div>
                                         <div class="col-sm-6 col-md-6">
                                             <label for="flat_filter_roomCountTo">до</label>
-                                            <input type="text" ng-model="query.house.rooms.to" id="flat_filter_roomCountTo" name="flat_filter[roomCountTo]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" ng-model="query.house.roomsto" id="flat_filter_roomCountTo" name="flat_filter[roomCountTo]" class="form-control input-sm form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -384,10 +386,10 @@
                                     <label>Цена От - До:</label>
                                     <div class="row">
                                         <div class="col-sm-6 col-md-6">
-                                            <input type="text" ng-model="query.house.price.from" id="flat_filter_priceFrom" name="flat_filter[priceFrom]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" ng-model="query.house.pricefrom" id="flat_filter_priceFrom" name="flat_filter[priceFrom]" class="form-control input-sm form-control input-sm">
                                         </div>
                                         <div class="col-sm-6 col-md-6">
-                                            <input type="text" ng-model="query.house.price.to" id="flat_filter_priceTo" name="flat_filter[priceTo]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" ng-model="query.house.priceto" id="flat_filter_priceTo" name="flat_filter[priceTo]" class="form-control input-sm form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -396,62 +398,32 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 clear-all second">
-
-                            <div class="form-group">
-                                <div class="col-sm-12">
-
-                                    <div id="flat_filter_status" class="checkboxes-holder">
-                                        <div class="status-block">
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.house.active" id="flat_filter_status_0" name="flat_filter[status]" required="required" value="active" checked="checked">
-                                                <label for="flat_filter_status_0" class="required">Действующие</label>
-                                            </div>
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.house.deleted" id="flat_filter_status_1" name="flat_filter[status]" required="required" value="deleted">
-                                                <label for="flat_filter_status_1" class="required">Удаленные</label>
-                                            </div>
-                                            <div class="block">
-                                                <input type="radio" ng-model="query.house.all" id="flat_filter_status_2" name="flat_filter[status]" required="required" value="all">
-                                                <label for="flat_filter_status_2" class="required">Все</label>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <hr>
+                                                        
                             <div class="form-group region">
                                 <div class="col-sm-12 col-xs-12">
                                     <label for="house_filter_region">Район</label>
-                                    <select ng-model="query.house.region" id="house_filter_region" name="house_filter[region]" data-live-search="true" data-search="street" class="selectpicker form-control input-sm">
-                                        <option value="">Алексеевка</option>
-                                        <option>Северная салтовка</option>
-                                        <option>606 м-р</option>
-                                        <option>607 м-р</option>
-                                        <option>Холодная гора</option>
-                                        <option>Южный вокзал</option>
-                                        <option>Чугуевский</option>
-                                        <option>Краснокутский</option>
-                                        <option>Барвенковский</option>
-                                        <option>Изюмский</option>
-                                        <option>Мерефянский</option>
-                                        <option>Змиевский</option>
-                                    </select>
+                                    <select class="form-control"
+                                                data-style="btn-primary"
+                                                data-live-search="true"
+                                                data-selectpicker
+                                                data-collection-name="regions"
+                                                ng-model="query.house.region"
+                                                ng-options="region.title for region in regions"
+                                        ></select>
                                 </div>
-                            </div>
-                            <hr>
+                            </div>                            
                             <div class="form-group street">
                                 <div class="col-xs-12 col-sm-12">
                                     <label for="flat_filter_street">Улица</label>
 
-                                    <select ng-model="query.street" id="house_filter_street" name="house_filter[street]" data-live-search="true" data-search="street" class="selectpicker form-control input-sm">
-                                        <option value="">Героев труда</option>
-                                        <option value="г">Блюхера улица</option>
-                                        <option value="п">50 лет СССР</option>
-                                        <option value="и">Третей пятилетки</option>
-                                        <option value="н">Проспект ленина</option>
-                                        <option value="гн">Московский проспект</option>
-                                    </select>
+                                    <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="streets"
+                                            ng-model="query.house.street"
+                                            ng-options="street.title for street in streets"
+                                    ></select>
                                 </div>
                             </div>
                         </div>
@@ -466,11 +438,11 @@
                                                 <div id="flat_filter_date_type" class="checkboxes-holder">
                                                     <label for="flat_filter_title">Дата</label>
                                                     <div class="block">
-                                                        <input type="radio" ng-model="query.house.date.created" id="flat_filter_date_type_0" name="flat_filter[date_type]" required="required" value="createdAt">
+                                                        <input type="radio" ng-model="query.house.date.created" id="flat_filter_date_type_0" name="flat_filter[date_type]" value="createdAt">
                                                         <label for="flat_filter_date_type_0" class="required">Создания</label>
                                                     </div>
                                                     <div class="block">
-                                                        <input type="radio" ng-model="query.house.date.correct" id="flat_filter_date_type_1" name="flat_filter[date_type]" required="required" value="updatedAt" checked="checked">
+                                                        <input type="radio" ng-model="query.house.date.correct" id="flat_filter_date_type_1" name="flat_filter[date_type]" value="updatedAt" checked="checked">
                                                         <label for="flat_filter_date_type_1" class="required">Коррекции</label>
                                                     </div>
                                                 </div>
@@ -479,11 +451,11 @@
                                         <div class="row">
                                             <div ng-show="!isToday" class="col-sm-12 col-md-12 from">
                                                 <label for="flat_filter_dateFrom" class="">От</label>
-                                                <input type="date" ng-model="query.house.date.from" id="flat_filter_dateFrom" name="flat_filter[dateFrom]" class="datepicker form-control input-sm">
+                                                <input type="date" ng-model="query.house.datefrom" id="flat_filter_dateFrom" name="flat_filter[dateFrom]" class="datepicker form-control input-sm">
                                             </div>
                                             <div ng-show="!isToday" class="col-sm-12 col-md-12 to">
                                                 <label for="flat_filter_dateTo" class="">До</label>
-                                                <input type="date" ng-model="query.house.date.to" id="flat_filter_dateTo" name="flat_filter[dateTo]" class="datepicker form-control input-sm">
+                                                <input type="date" ng-model="query.house.dateto" id="flat_filter_dateTo" name="flat_filter[dateTo]" class="datepicker form-control input-sm">
                                             </div>
                                             <div class="col-sm-12 col-md-12 today">
                                                 <input type="checkbox" ng-model="isToday" ng-init="isToday = true" id="flat_filter_today" name="flat_filter[today]" value="today">
@@ -500,26 +472,26 @@
                                         <div class="row">
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorFrom">от</label>
-                                                <input type="text" ng-model="query.house.floor.from" id="flat_filter_floorFrom" name="flat_filter[floorFrom]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.house.floorfrom" id="flat_filter_floorFrom" name="flat_filter[floorFrom]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-3 col-md-3">
                                                 <label for="flat_filter_floorfloorTo">до</label>
-                                                <input type="text" ng-model="query.house.floor.to" id="flat_filter_floorTo" name="flat_filter[floorTo]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.house.floorto" id="flat_filter_floorTo" name="flat_filter[floorTo]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-6 col-md-6">
                                                 <label for="flat_filter_floorValue" class="">Точный этаж</label>
-                                                <input type="text" ng-model="query.house.floor.concrete" id="flat_filter_floorValue" name="flat_filter[floorValue]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.house.floorconcrete" id="flat_filter_floorValue" name="flat_filter[floorValue]" class="form-control input-sm form-control input-sm">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 checkboxes-holder no-padding">
                                             <div class="block">
-                                                <input type="checkbox" ng-model="query.floor.notFirst" id="flat_filter_floorNotFirst" name="flat_filter[floorNotFirst]" value="1">
+                                                <input type="checkbox" ng-model="query.house.floornotFirst" id="flat_filter_floorNotFirst" name="flat_filter[floorNotFirst]" value="1">
                                                 <label for="flat_filter_floorNotFirst" class="">Не первый</label>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 checkboxes-holder no-padding">
                                             <div class="block">
-                                                <input type="checkbox" ng-model="query.house.notLast" id="flat_filter_floorNotLast" name="flat_filter[floorNotLast]" value="1">
+                                                <input type="checkbox" ng-model="query.housenotLast" id="flat_filter_floorNotLast" name="flat_filter[floorNotLast]" value="1">
                                                 <label for="flat_filter_floorNotLast" class="">Не последний</label>
                                             </div>
                                         </div>
@@ -527,13 +499,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" id="flat_submit" name="flat[submit]" class="btn btn-success">Применить фильтр</button>
-                <button type="submit" ng-click="" id="flat_submit" name="flat[submit]" class="btn btn-danger">Сбросить фильтр</button>
-            </div>
+                    </div>                    
+                <div class="modal-footer">
+                    <button type="submit" id="flat_submit" name="flat[submit]" class="btn btn-success">Применить фильтр</button> 
+                    <button ng-click="cancelFilter()" class="btn btn-danger">Сбросить фильтр</button> 
+                </div>
+            </form>
+            </div>            
         </div>
     </div>
 </div>
@@ -542,7 +514,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" id="setCookie" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
+                <button class="close" id="setCookie3" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
                     <i class="fa fa-close"></i>
                 </button>
                 <h4>Добавить рекламу квартиры</h4>
@@ -815,7 +787,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close" id="setCookie" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
+                <button class="close" id="setCookie4" type="button" data-dismiss="modal" onclick="document.getElementById('modal_1').style.display='none';">
                     <i class="fa fa-close"></i>
                 </button>
                 <h4>Добавить рекламу дома</h4>
@@ -1118,10 +1090,10 @@
         </div>
         <div class="col-md-12 data">
             <div class="datatables">
-                <a href="" ng-click="isFlats = true" ui-sref="flats" class="btn btn-group">БД Квартир</a>
-                <a href="" ng-click="isFlats = false" ui-sref="houses" class="btn btn-group">БД Домов</a>
-                <a href="db-customers.html" ng-show="isFlats" class="btn btn-group">БД Покупателей квартир</a>
-                <a href="db-house-customers.html" ng-show="!isFlats" class="btn btn-group">БД Покупателей домов</a>
+                <a href="" ng-click="isFlats = true" ui-sref="flats" class="btn btn-group">Рекламы квартир</a>
+                <a href="" ng-click="isFlats = false" ui-sref="houses" class="btn btn-group">Рекламы домов</a>
+                <a href="db-customers.html" ng-show="isFlats" class="btn btn-group">Покупатели квартир</a>
+                <a href="db-house-customers.html" ng-show="!isFlats" class="btn btn-group">Покупатели домов</a>
             </div>
         </div>
     </div>
@@ -1133,10 +1105,7 @@
 <script>
     $(document).ready(function() {
         $('#layout').DataTable();
-        $('tbody.rowlink').rowlink('a');
-        $('#modal_1').on('hidden', function () {
-            $(this).removeData('modal');
-        });
+        $('tbody.rowlink').rowlink('a');        
     } );    
 </script>
 </body>

@@ -15,8 +15,7 @@ class CreateExpertTable extends Migration
         Schema::create('experts', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->integer('id_password_type')->unsigned();
-            $table->foreign('id_password_type')->references('id')->on('password_types');
-            $table->char('phone',15);
+            $table->foreign('id_password_type')->references('id')->on('password_types');            
             $table->integer('id_user')->unsigned();
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();

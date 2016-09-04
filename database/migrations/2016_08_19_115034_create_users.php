@@ -19,6 +19,8 @@ class CreateUsers extends Migration
             $table->integer('id_role')->unsigned();
             $table->foreign('id_role')->references('id')->on('roles');
             $table->string('remember_token',100);
+            $table->char('phone', 15);
+            $table->string('FIO');
             $table->timestamps();
         });
 
