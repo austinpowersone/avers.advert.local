@@ -45,6 +45,7 @@
     <script src="/app/controllers/UserController.js"></script>
     <script src="/app/controllers/SearchFlatController.js"></script>
     <script src="/app/controllers/SearchHouseController.js"></script>
+    <script src="/app/controllers/AddingFlatController.js"></script>
 </head>
 
 <body>
@@ -510,7 +511,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="modal_3">
+<div ng-controller="AddingFlatController" class="modal fade" id="modal_3">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -520,24 +521,26 @@
                 <h4>Добавить рекламу квартиры</h4>
             </div>
             <div class="modal-body">
-                <form name="flat" method="post" action="/flats" class="form form-small" role="form" enctype="multipart/form-data">
+                <form name="flat" class="form form-small" role="form" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 column-1">
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-xs-5 col-sm-5 roomCount">
                                         <label for="flat_roomCount" class="">Комнат</label>
-                                        <input ng-model="query.add.rooms.count" type="text" id="flat_roomCount" name="flat[roomCount]" class="form-control input-sm form-control input-sm">
+                                        <input ng-model="query.add.roomscount" type="text" id="flat_roomCount" name="flat[roomCount]" class="form-control input-sm form-control input-sm">
                                     </div>
                                     <div class="col-xs-7 col-sm-7 type">
                                         <label for="flat_type" class="required">Тип</label>
-                                        <select ng-model="query.add.type" id="flat_type" name="flat[type]" data-live-search="true" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">Гостинка</option>
-                                            <option">Подселенка</option>
-                                            <option>Изолированная</option>
-                                            <option>Новострой</option>
-                                            <option>Гостинка новострой</option>
-                                        </select>
+                                        <select  
+                                            ng-model="query.query.addtype" class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="types"
+                                            ng-model="query.type"
+                                            ng-options="type.title for type in types"
+                                        ></select>                                        
                                     </div>
                                 </div>
                             </div>
@@ -548,10 +551,10 @@
                                         <label for="flat_floor" class="">Этажи</label>
                                         <div class="row">
                                             <div class="col-sm-6 col-md-6">
-                                                <input placeholder="Этаж" type="text" ng-model="query.add.floor" id="flat_floor" name="flat[floor]" class="form-control input-sm form-control input-sm">
+                                                <input placeholder="Этаж" type="text" ng-model="query.addfloor" id="flat_floor" name="flat[floor]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-sm-6 col-md-6">
-                                                <input placeholder="Этажность" type="text" ng-model="query.add.floor_count" id="flat_floorCount" name="flat[floorCount]" class="form-control input-sm form-control input-sm">
+                                                <input placeholder="Этажность" type="text" ng-model="query.addfloor_count" id="flat_floorCount" name="flat[floorCount]" class="form-control input-sm form-control input-sm">
                                             </div>
                                         </div>
                                     </div>
@@ -565,15 +568,15 @@
                                         <div class="row nopadding">
                                             <div class="col-xs-4 col-sm-3 col-md-4 col-lg-4 ">
                                                 <label for="flat_livingArea" class="">Жилая</label>
-                                                <input type="text" ng-model="query.add.living_area" id="flat_livingArea" name="flat[livingArea]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.addliving_area" id="flat_livingArea" name="flat[livingArea]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-xs-4 col-sm-3 col-md-4 col-lg-4">
                                                 <label for="flat_totalArea" class="">Общая</label>
-                                                <input type="text" ng-model="query.add.total_area" id="flat_totalArea" name="flat[totalArea]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.addtotal_area" id="flat_totalArea" name="flat[totalArea]" class="form-control input-sm form-control input-sm">
                                             </div>
                                             <div class="col-xs-4 col-sm-3 col-md-4 col-lg-4">
                                                 <label for="flat_kitchenArea" class="">Кухня</label>
-                                                <input type="text" ng-model="query.add.kithcen_area" id="flat_kitchenArea" name="flat[kitchenArea]" class="form-control input-sm form-control input-sm">
+                                                <input type="text" ng-model="query.addkithcen_area" id="flat_kitchenArea" name="flat[kitchenArea]" class="form-control input-sm form-control input-sm">
                                             </div>
                                         </div>
                                         <hr>
@@ -587,7 +590,7 @@
                                         <label for="flat_price" class="">Цена тыс. у.е.</label>
                                         <div class="input-group">
                                             <span class="input-group-addon">$</span>
-                                            <input type="text" ng-model="query.add.cost" id="flat_price" name="flat[price]" class="form-control input-sm form-control input-sm">
+                                            <input type="text" ng-model="query.addcost" id="flat_price" name="flat[price]" class="form-control input-sm form-control input-sm">
                                         </div>
                                     </div>
                                 </div>
@@ -598,15 +601,15 @@
                             <div class="row">
                                 <div class="form-group">
                                     <div class="col-sm-12 schema">
-                                        <label for="flat_flatSchema" class="">Схема</label>
-                                        <select ng-model="query.add.schema" data-live-search="true" id="flat_flatSchema" name="flat[flatSchema]" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">разд</option>
-                                            <option>смеж</option>
-                                            <option>2+1</option>
-                                            <option>3+1</option>
-                                            <option>2+2</option>
-                                            <option">2+1+1</option>
-                                        </select>
+                                        <label for="flat_flatSchema" class="">Тип</label>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="types"
+                                            ng-model="query.addtype"
+                                            ng-options="type.title for type in types"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -614,16 +617,14 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 material">
                                         <label for="flat_wallMaterial" class="">Материал</label>
-                                        <select ng-model="query.add.material" id="flat_wallMaterial" name="flat[wallMaterial]" data-live-search="true" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">кир.</option>
-                                            <option>дер.</option>
-                                            <option>д+к</option>
-                                            <option>шлак</option>
-                                            <option>пан.</option>
-                                            <option>блоч.</option>
-                                            <option>саман</option>
-                                            <option">монол</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="materials"
+                                            ng-model="query.addmaterial"
+                                            ng-options="material.title for material in materials"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -631,13 +632,14 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 wc">
                                         <label for="flat_wc" class="">Санузел</label>
-                                        <select ng-model="query.add.bathroom" data-live-search="true" id="flat_wc" name="flat[wc]" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">1 раз</option>
-                                            <option>разд.</option>
-                                            <option>совм.</option>
-                                            <option>2 раз.</option>
-                                            <option>2 сов.</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="bathroom_types"
+                                            ng-model="query.addmbathroom"
+                                            ng-options="bathroom.title for bathroom in bathroom_types"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -645,15 +647,14 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 balkon">
                                         <label class="sc-only" for="flat_balkon">Балкон</label>
-                                        <select id="flat_balkon" ng-model="query.add.balcony" data-live-search="true" name="flat[balkon]" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">Балк. НЕТ</option>
-                                            <option>1 балкон</option>
-                                            <option>1 балк.заст.</option>
-                                            <option>2 балкона</option>
-                                            <option>3 балкона</option>
-                                            <option>3 балк.заст.</option>
-                                            <option>больше 3 бал</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="balcony_types"
+                                            ng-model="query.addmbalcony"
+                                            ng-options="balcony.title for balcony in balcony_types"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -661,16 +662,14 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 condition">
                                         <label for="flat_flatCondition" class="">Состояние</label>
-                                        <select ng-model="query.add.state" data-live-search="true" id="flat_flatCondition" name="flat[flatCondition]" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">жилое</option>
-                                            <option">строительный</option>
-                                            <option>без ремонта</option>
-                                            <option">косметика</option>
-                                            <option>капитальный</option>
-                                            <option>евроремонт</option>
-                                            <option>убитая</option>
-                                            <option>средний</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="state_types"
+                                            ng-model="query.addmstate"
+                                            ng-options="state.title for state in state_types"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -681,16 +680,14 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 district">
                                         <label for="flat_district" class="">Район</label>
-                                        <select ng-model="query.add.region" id="flat_district" name="flat[district]" data-live-search="true" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">Салтовка</option>
-                                            <option value="Алексеевка">Алексеевка</option>
-                                            <option value="Артема">Артема</option>
-                                            <option value="Аэропорт">Аэропорт</option>
-                                            <option value="Б.Даниловка">Б.Даниловка</option>
-                                            <option value="Восточный">Восточный</option>
-                                            <option value="Гагарина">Гагарина</option>
-                                            <option value="Герцена">Герцена</option>
-                                        </select>
+                                        <select class="form-control"
+                                                data-style="btn-primary"
+                                                data-live-search="true"
+                                                data-selectpicker
+                                                data-collection-name="regions"
+                                                ng-model="query.addregion"
+                                                ng-options="region.title for region in regions"
+                                        ></select>
                                     </div>
                                 </div>
                             </div>
@@ -699,7 +696,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 landmark">
                                         <label for="flat_landmark" class="">Ориентир</label>
-                                        <input ng-model="query.add.reference_point" type="text" id="flat_landmark" name="flat[landmark]" class="form-control input-sm autocomplete form-control input-sm ui-autocomplete-input" rel="/autocomplete/landmark" autocomplete="off">
+                                        <input ng-model="query.addreference_point" type="text" id="flat_landmark" name="flat[landmark]" class="form-control input-sm autocomplete form-control input-sm ui-autocomplete-input" rel="/autocomplete/landmark" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -707,14 +704,14 @@
                                 <div class="form-group">
                                     <div class="col-xs-12 col-sm-12">
                                         <label for="flat_adding_street">Улица</label>
-                                        <select ng-model="query.add.street" id="flat_adding_street" name="flat_adding[street]" data-live-search="true" data-search="street" class="selectpicker form-control input-sm">
-                                            <option value="">Героев труда</option>
-                                            <option>Блюхера улица</option>
-                                            <option>50 лет СССР</option>
-                                            <option>Третей пятилетки</option>
-                                            <option>Проспект ленина</option>
-                                            <option>Московский проспект</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="streets"
+                                            ng-model="query.addstreet"
+                                            ng-options="street.title for street in streets"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
@@ -723,11 +720,11 @@
                                 <div class="form-group">
                                     <div class="col-sm-6 houseNumber">
                                         <label for="flat_houseNumber" class="">№ дома</label>
-                                        <input ng-model="query.add.house_number" type="text" id="flat_houseNumber" name="flat[houseNumber]" class="form-control input-sm form-control input-sm">
+                                        <input ng-model="query.addhouse_number" type="text" id="flat_houseNumber" name="flat[houseNumber]" class="form-control input-sm form-control input-sm">
                                     </div>
                                     <div class="col-sm-6 flatNumber">
                                         <label for="flat_flatNumber" class="">№ квартиры</label>
-                                        <input type="text" ng-model="query.add.flat_number" id="flat_flatNumber" name="flat[flatNumber]" class="form-control input-sm form-control input-sm">
+                                        <input type="text" ng-model="query.addflat_number" id="flat_flatNumber" name="flat[flatNumber]" class="form-control input-sm form-control input-sm">
                                     </div>
                                 </div>
                             </div>
@@ -738,46 +735,42 @@
                                 <div class="form-group">
                                     <div class="col-sm-12 source">
                                         <label for="flat_source" class="">Источник информации</label>
-                                        <select ng-model="query.add.source" data-live-search="true" id="flat_source" name="flat[source]" class="selectpicker form-control input-sm form-control input-sm">
-                                            <option value="">Печатная газета Премьер</option>
-                                            <option>Сайт Премьера (premier.ua)</option>
-                                            <option>База данных</option>
-                                            <option>По рекомендации</option>
-                                            <option>Расклейка</option>
-                                            <option>Другие источники</option>
-                                            <option>Olx</option>
-                                            <option>dom.ria.ua</option>
-                                            <option>lun.ua</option>
-                                            <option>ЦентрИнформ (ci.ua)</option>
-                                            <option>kharkovestate.com</option>
-                                            <option>domik.ua</option>
-                                            <option>est.ua</option>
-                                            <option>metry.ua</option>
-                                            <option>estate-in-kharkov.com</option>
-                                            <option>Другие сайты</option>
-                                        </select>
+                                        <select class="form-control"
+                                            data-style="btn-primary"
+                                            data-live-search="true"
+                                            data-selectpicker
+                                            data-collection-name="sites"
+                                            ng-model="query.addsite"
+                                            ng-options="site.title for site in sites"
+                                    ></select>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <label class="sc-only" for="flat_info">Заголовок</label>
-                                    <textarea ng-model="query.add.header" id="flat_header" name="flat[header]" class="form-control form-control"></textarea>
+                                    <textarea ng-model="query.addheader" id="flat_header" name="flat[header]" class="form-control form-control"></textarea>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-xs-12">
                                     <label class="sc-only" for="flat_info">Дополнительная информация</label>
-                                    <textarea ng-model="query.add.add_info" id="flat_info" name="flat[info]" class="form-control form-control"></textarea>
+                                    <textarea ng-model="query.addadd_info" id="flat_info" name="flat[info]" class="form-control form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row" ng-repeat="photo in photo_count">
+                                <div class="col-xs-12">
+                                    <label class="sc-only" for="flat_info">Загрузить фото</label>
+                                    <input ng-click="add_photo()" type="file" custom-on-change="uploadFile" class="form-control">
                                 </div>
                             </div>
                         </div>
                     </div>
+                <div class="modal-footer">
+                    <button ng-click="addFlat()" type="submit" id="flat_submit" name="flat[submit]" class="btn btn-group btn-success">Сохранить</button>
+                </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" id="flat_submit" name="flat[submit]" class="btn modal-btn">Сохранить</button>
             </div>
         </div>
     </div>
