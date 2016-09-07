@@ -27,12 +27,16 @@
     
     <script src="/app/services/FlatService.js"></script>
     <script src="/app/services/FlatTypeService.js"></script>
+    <script src="/app/services/FlatStateService.js"></script>
     <script src="/app/services/StreetService.js"></script>
     <script src="/app/services/MaterialService.js"></script>
     <script src="/app/services/RegionService.js"></script>
     <script src="/app/services/HouseService.js"></script>
     <script src="/app/services/UserService.js"></script>
     <script src="/app/services/HouseTypeService.js"></script>
+    <script src="/app/services/BathroomTypesService.js"></script>
+    <script src="/app/services/BalconyTypesService.js"></script>
+    <script src="/app/services/SiteService.js"></script>
 
     <script src="/app/controllers/FlatController.js"></script>
     <script src="/app/controllers/IndexController.js"></script>
@@ -521,7 +525,7 @@
                 <h4>Добавить рекламу квартиры</h4>
             </div>
             <div class="modal-body">
-                <form name="flat" class="form form-small" role="form" enctype="multipart/form-data">
+                <form ng-submit="addFlat()" name="flat" class="form form-small" role="form">
                     <div class="row">
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 column-1">
                             <div class="row">
@@ -533,12 +537,12 @@
                                     <div class="col-xs-7 col-sm-7 type">
                                         <label for="flat_type" class="required">Тип</label>
                                         <select  
-                                            ng-model="query.query.addtype" class="form-control"
+                                            class="form-control"
                                             data-style="btn-primary"
                                             data-live-search="true"
                                             data-selectpicker
                                             data-collection-name="types"
-                                            ng-model="query.type"
+                                            ng-model="query.addtype"
                                             ng-options="type.title for type in types"
                                         ></select>                                        
                                     </div>
@@ -581,7 +585,6 @@
                                         </div>
                                         <hr>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="row">
@@ -598,20 +601,7 @@
                         </div>
 
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 column-2">
-                            <div class="row">
-                                <div class="form-group">
-                                    <div class="col-sm-12 schema">
-                                        <label for="flat_flatSchema" class="">Тип</label>
-                                        <select class="form-control"
-                                            data-style="btn-primary"
-                                            data-live-search="true"
-                                            data-selectpicker
-                                            data-collection-name="types"
-                                            ng-model="query.addtype"
-                                            ng-options="type.title for type in types"
-                                    ></select>
-                                    </div>
-                                </div>
+                            <div class="row">                                
                             </div>
                             <div class="row">
                                 <div class="form-group">
@@ -637,7 +627,7 @@
                                             data-live-search="true"
                                             data-selectpicker
                                             data-collection-name="bathroom_types"
-                                            ng-model="query.addmbathroom"
+                                            ng-model="query.addbathroom"
                                             ng-options="bathroom.title for bathroom in bathroom_types"
                                     ></select>
                                     </div>
@@ -652,7 +642,7 @@
                                             data-live-search="true"
                                             data-selectpicker
                                             data-collection-name="balcony_types"
-                                            ng-model="query.addmbalcony"
+                                            ng-model="query.addbalcony"
                                             ng-options="balcony.title for balcony in balcony_types"
                                     ></select>
                                     </div>
@@ -667,7 +657,7 @@
                                             data-live-search="true"
                                             data-selectpicker
                                             data-collection-name="state_types"
-                                            ng-model="query.addmstate"
+                                            ng-model="query.addstate"
                                             ng-options="state.title for state in state_types"
                                     ></select>
                                     </div>
@@ -768,7 +758,7 @@
                         </div>
                     </div>
                 <div class="modal-footer">
-                    <button ng-click="addFlat()" type="submit" id="flat_submit" name="flat[submit]" class="btn btn-group btn-success">Сохранить</button>
+                    <button type="submit" id="flat_submit" name="flat[submit]" class="btn btn-group btn-success">Сохранить</button>
                 </div>
                 </form>
             </div>

@@ -9,6 +9,7 @@ use App\Models\Advert;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Input;
 
 class FlatController extends Controller
 {
@@ -142,8 +143,9 @@ class FlatController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    {        
+        $send_data = json_decode($request->input('send_data'), true);
+        Log::info($send_data);
     }
 
     /**
