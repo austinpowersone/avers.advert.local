@@ -24,7 +24,9 @@
     <script src="/components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="/components/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
     <script src="/app/app.js"></script>
-    
+    <script>
+        var csrf = '<?= CSRF_TOKEN() ?>';
+    </script>
     <script src="/app/services/FlatService.js"></script>
     <script src="/app/services/FlatTypeService.js"></script>
     <script src="/app/services/FlatStateService.js"></script>
@@ -525,7 +527,7 @@
                 <h4>Добавить рекламу квартиры</h4>
             </div>
             <div class="modal-body">
-                <form ng-submit="addFlat()" name="flat" class="form form-small" role="form">
+                <form ng-submit="addFlat()" name="flat" class="form form-small" role="form"  enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 column-1">
                             <div class="row">
@@ -749,10 +751,10 @@
                                     <textarea ng-model="query.addadd_info" id="flat_info" name="flat[info]" class="form-control form-control"></textarea>
                                 </div>
                             </div>
-                            <div class="row" ng-repeat="photo in photo_count">
+                            <div class="row">
                                 <div class="col-xs-12">
                                     <label class="sc-only" for="flat_info">Загрузить фото</label>
-                                    <input ng-click="add_photo()" type="file" custom-on-change="uploadFile" class="form-control">
+                                    <input type="file" id="file-uploader" class="form-control" multiple>
                                 </div>
                             </div>
                         </div>

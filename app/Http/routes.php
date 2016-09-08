@@ -18,3 +18,14 @@ Route::resource('/api/houses', 'HouseController');
 Route::resource('/api/users', 'UserController');
 Route::auth();
 Route::post('/logout', 'AuthController@logout');
+
+Route::post('/upload', function () {	
+     foreach (Request::file('uploadedFile') as $inputFile) {
+     	$inputFile->move('images', $inputFile->getClientOriginalName());     	
+    }
+    return [1,2,3,4,5];
+});
+
+Route::get('/files/{file}', function (Request $request, $file) {
+    return file($file);
+});
